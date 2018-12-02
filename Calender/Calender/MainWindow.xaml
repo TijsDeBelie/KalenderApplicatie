@@ -1,0 +1,106 @@
+﻿<Window xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  x:Class="Calender.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calender"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        
+        Title="Kalenderapplicatie" Height="Auto" Width="1406.514">
+    <Grid>
+        <TabControl x:Name="TabCalender" Height="Auto" Width="Auto" Margin="0,0,-0.4,-0.4">
+            <TabItem Header="Calender">
+                <DockPanel x:Name="KalenderView" LastChildFill="True" Height="Auto" Width="Auto">
+
+                    <Label DockPanel.Dock="Top" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top">Datum</Label>
+                    <TextBox DockPanel.Dock="Top"  x:Name="txtDate" Height="23" Width="120" Margin="2,0,634,0"/>
+                    <Calendar DockPanel.Dock="Right" x:Name="Cmonth"
+                                SelectionMode="SingleRange" 
+                                FirstDayOfWeek="Monday"  
+                                IsTodayHighlighted="True"
+                                Margin="0,95.2,200,170.6"
+                                RenderTransformOrigin="0.5,0.5"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Width="178"
+                                SelectedDatesChanged="Cmonth_SelectedDatesChanged"
+                                MouseRightButtonDown="Cmonth_MouseRightButtonDown">
+                        <Calendar.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Calendar.RenderTransform>
+                    </Calendar>
+                    <StackPanel DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left">
+                        <TextBox x:Name="txtKalenderNaam" Margin="10" Width="Auto" Height="Auto"></TextBox>
+                        <Button x:Name="BtnNieuwKalender" Margin="10" Width="Auto" Height="Auto" Content="Nieuwe kalender" Click="BtnNieuwKalender_Click"></Button>
+                        <ComboBox x:Name="CBkalender1" Width="100" SelectedIndex="0" ItemsSource="{Binding Naam}" SelectionChanged="CBkalender1_SelectionChanged">
+
+                        </ComboBox>
+                        <Button x:Name="BtnVerwijderKalender" Margin="10" Width="Auto" Height="Auto" Content="Verwijder kalender" Click="BtnVerwijderKalender_Click"></Button>
+
+                    </StackPanel>
+                    <ListBox x:Name="DayDisplayList" Height="428.8" Width="500" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="Calenderitems">
+                <StackPanel>
+                    <ComboBox x:Name="CBkalender2" Width="Auto" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender2_SelectionChanged"></ComboBox>
+                    <ListBox x:Name="DisplayList" ScrollViewer.VerticalScrollBarVisibility="Visible" MaxHeight="400"/>
+                    <WrapPanel Width="Auto">
+                        <Button x:Name="BtnWijzig" Width="100" Height="Auto" Content="Wijzig"></Button>
+                        <Button x:Name="BtnVerwijder" Width="100" Height="Auto" Content="Verwijder"></Button>
+                    </WrapPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Details">
+                <GroupBox Header="Nieuw Kalenderitem" Margin="5,0,456.4,0">
+                    <StackPanel Margin="0,0,-31,0">
+                        <WrapPanel>
+                            <Label>Onderwerp</Label>
+                            <TextBox x:Name="txtOnderwerp" Width="100"></TextBox>
+
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Beschrijving</Label>
+                            <TextBox x:Name="txtBeschrijving" Width="100" Height="50" AcceptsReturn="True"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Locatie</Label>
+                            <TextBox x:Name="txtLocatie" Width="100">
+                            </TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Start uur</Label>
+
+                            <xctk:DateTimePicker x:Name="dtpStart" Width="100" Format="ShortTime" ShowDropDownButton="False" Value="9:00">
+
+                            </xctk:DateTimePicker>
+
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Eind uur</Label>
+                            <xctk:DateTimePicker x:Name="dtpEnd" Width="100" Format="ShortTime" ShowDropDownButton="False" Value="10:00">
+
+                            </xctk:DateTimePicker>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Beschikbaarheid</Label>
+                            <ComboBox x:Name="CBstatus" Width="100" ItemsSource="{Binding ListOfItems}" SelectedIndex="0">
+                            </ComboBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label>Kalender</Label>
+                            <ComboBox x:Name="CBkalender" Width="100" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender_SelectionChanged"></ComboBox>
+                        </WrapPanel>
+                        <Button Content="Voeg toe" Margin="0,0,26.2,0" Click="BtnNieuweAfspraak_Click"/>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
