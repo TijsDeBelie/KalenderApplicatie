@@ -85,7 +85,7 @@
     <Compile Include="Classes\Status.cs" />
     <Compile Include="Exceptions\DBInsertFailed.cs" />
     <Compile Include="Exceptions\NameIsEmpty.cs" />
-    <Compile Include="Sqlconnect.cs" />
+    <Compile Include="Classes\Sqlconnect.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

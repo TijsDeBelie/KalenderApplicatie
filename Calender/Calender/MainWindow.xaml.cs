@@ -56,7 +56,7 @@ namespace Calender
 
             DisplayList.Items.Clear();
             UpdateList((IKalender)CBkalender.SelectedValue);
-            DB.InsertAspraak(nieuweAfspraak);
+            DB.InsertAfspraak(nieuweAfspraak);
         }
 
         private void Cmonth_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)

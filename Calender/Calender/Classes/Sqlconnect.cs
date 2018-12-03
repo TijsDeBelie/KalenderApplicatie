@@ -75,23 +75,27 @@ namespace Calender
 
                 adapterKalender.InsertCommand.CommandText += " set @newid = scope_identity()";
 
-                parameter = new SqlParameter();
-                parameter.ParameterName = "@newid";
+                parameter = new SqlParameter("@newid", 0);
                 parameter.SqlDbType = SqlDbType.Int;
                 parameter.Size = 4;
                 parameter.Direction = ParameterDirection.Output;
 
                 adapterKalender.InsertCommand.Parameters.Add(parameter);
-                adapterKalender.RowUpdated += Adapter_RowUpdated;
+                adapterKalender.RowUpdated += AdapterKalender_RowUpdated;
 
-                
+
                 adapterKalender.Fill(dataset, "Kalender");
 
-                dataset.Tables["Kalender"].Columns["id"].AutoIncrement = true;
-                dataset.Tables["Kalender"].Columns["id"].AutoIncrementSeed = -1;
-                dataset.Tables["Kalender"].Columns["id"].AutoIncrementStep = -1;
+                dataset.Tables["Kalender"].Columns["Id"].AutoIncrement = true;
+                dataset.Tables["Kalender"].Columns["Id"].AutoIncrementSeed = -1;
+                dataset.Tables["Kalender"].Columns["Id"].AutoIncrementStep = -1;
 
 
+            }
+            else
+            {
+
+                throw new Exception();
             }
 
 
@@ -103,66 +107,101 @@ namespace Calender
             if (Con != null && Con.State == ConnectionState.Open)
             {
                 adapterAfspraak = new SqlDataAdapter("select * from tblAfspraak", Con);
-                builder = new SqlCommandBuilder(adapterKalender);
+                builder = new SqlCommandBuilder(adapterAfspraak);
                 adapterAfspraak.InsertCommand = builder.GetInsertCommand().Clone();
                 adapterAfspraak.UpdateCommand = builder.GetUpdateCommand().Clone();
                 adapterAfspraak.DeleteCommand = builder.GetDeleteCommand().Clone();
 
                 builder.Dispose();
 
-                adapterAfspraak.InsertCommand.CommandText += " set @newid = scope_identity()";
+                adapterAfspraak.InsertCommand.CommandText += " set @id = scope_identity()";
 
-                parameter = new SqlParameter();
-                parameter.ParameterName = "@newid";
-                parameter.SqlDbType = SqlDbType.Int;
-                parameter.Size = 4;
-                parameter.Direction = ParameterDirection.Output;
+                SqlParameter parameterNewID = new SqlParameter("@id", 0);
+                parameterNewID.SqlDbType = SqlDbType.Int;
+                parameterNewID.Size = 4;
+                parameterNewID.Direction = ParameterDirection.Output;
 
-                adapterAfspraak.InsertCommand.Parameters.Add(parameter);
-                adapterAfspraak.RowUpdated += Adapter_RowUpdated;
+                adapterAfspraak.InsertCommand.Parameters.Add(parameterNewID);
 
-
+                adapterAfspraak.RowUpdated += AdapterAfspraak_RowUpdated;
+                
                 adapterAfspraak.Fill(dataset, "Afspraak");
 
-                dataset.Tables["Afspraak"].Columns["id"].AutoIncrement = true;
-                dataset.Tables["Afspraak"].Columns["id"].AutoIncrementSeed = -1;
-                dataset.Tables["Afspraak"].Columns["id"].AutoIncrementStep = -1;
+                dataset.Tables["Afspraak"].Columns["Id"].AutoIncrement = true;
+                dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementSeed = -1;
+                dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementStep = -1;
 
 
+                DataRelation relation = new DataRelation("AfspraakKalender", dataset.Tables["Kalender"].Columns["id"], dataset.Tables["Afspraak"].Columns["KalenderId"]);
+                dataset.Relations.Add(relation);
+                relation.ChildKeyConstraint.UpdateRule = Rule.Cascade;
             }
+            else
+            {
 
-
+                throw new Exception();
+            }
         }
+
+
+
+
 
         public void InsertKalender(IKalender kalender)
         {
             row = dataset.Tables["Kalender"].NewRow();
             row["Naam"] = kalender.Naam;
             dataset.Tables["Kalender"].Rows.Add(row);
-
             adapterKalender.Update(dataset, "Kalender");
         }
 
-        public void InsertAspraak(Afspraak afspraak)
+        public void InsertAfspraak(Afspraak afspraak)
         {
+
             row = dataset.Tables["Afspraak"].NewRow();
-            row["startTime"] = afspraak.StartTime;
-            row["endTime"] = afspraak.StartTime;
-            row["subject"] = afspraak.Subject;
-            row["beschrijving"] = afspraak.Beschrijving;
+
+            row["startTime"] = (DateTime)afspraak.StartTime;
+            row["endTime"] = (DateTime)afspraak.EndTime;
+            row["subject"] = (string)afspraak.Subject;
+            row["beschrijving"] = (string)afspraak.Beschrijving;
             
+
             dataset.Tables["Afspraak"].Rows.Add(row);
 
+            adapterAfspraak.Update(dataset, "Afspraak");
+
+        }
+
+        public void DeleteAfspraak(Afspraak afspraak)
+        {
+            DataRow row = dataset.Tables["Afspraak"].Rows[0];
+            row.Delete();
+            adapterAfspraak.Update(dataset, "Afspraak");
+        }
+
+        public void DeleteKalender(IKalender kalender)
+        {
+            DataRow row = dataset.Tables["Kalender"].Rows[0];
+            row.Delete();
             adapterKalender.Update(dataset, "Afspraak");
+
+
         }
 
 
 
-        private static void Adapter_RowUpdated(object sender, SqlRowUpdatedEventArgs e)
+        private static void AdapterKalender_RowUpdated(object sender, SqlRowUpdatedEventArgs e)
         {
             if (e.StatementType == StatementType.Insert)
             {
                 e.Row["id"] = e.Command.Parameters["@newid"].Value;
+            }
+        }
+        private static void AdapterAfspraak_RowUpdated(object sender, SqlRowUpdatedEventArgs e)
+        {
+            if (e.StatementType == StatementType.Insert)
+            {
+                e.Row["Id"] = e.Command.Parameters["@id"].Value;
             }
         }
 
