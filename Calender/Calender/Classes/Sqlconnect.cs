@@ -188,6 +188,23 @@ namespace Calender
 
         }
 
+        public void SelectAfspraak(Afspraak afspraak)
+        {
+            DataSet returnDataset = new DataSet();
+            if (dataset.Tables["Afspraak"].Rows.Count > 0)
+            {
+                foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
+                {
+                    if((DateTime)row["startTime"] == afspraak.StartTime)
+                    {
+
+                        //Adding it to the list
+                    }
+
+                }
+            }
+        }
+
 
 
         private static void AdapterKalender_RowUpdated(object sender, SqlRowUpdatedEventArgs e)
