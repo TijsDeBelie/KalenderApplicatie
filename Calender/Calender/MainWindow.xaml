@@ -6,15 +6,19 @@
         xmlns:local="clr-namespace:Calender"
         mc:Ignorable="d"
         WindowState="Maximized"
+      
         
         Title="Kalenderapplicatie" Height="Auto" Width="1406.514">
+    <Window.Resources>
+        <local:NullToBooleanConverter x:Key="NullToBooleanConverter"></local:NullToBooleanConverter>
+    </Window.Resources>
     <Grid>
         <TabControl x:Name="TabCalender" Height="Auto" Width="Auto" Margin="0,0,-0.4,-0.4">
             <TabItem Header="Calender">
                 <DockPanel x:Name="KalenderView" LastChildFill="True" Height="Auto" Width="Auto">
 
                     <Label DockPanel.Dock="Top" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top">Datum</Label>
-                    <TextBox DockPanel.Dock="Top"  x:Name="txtDate" Height="23" Width="120" Margin="2,0,634,0"/>
+                    <TextBox DockPanel.Dock="Top"  x:Name="txtDate" Height="23" Width="120" Margin="318,0,956.4,0"/>
                     <Calendar DockPanel.Dock="Right" x:Name="Cmonth"
                                 SelectionMode="SingleRange" 
                                 FirstDayOfWeek="Monday"  
@@ -41,7 +45,7 @@
                         <ComboBox x:Name="CBkalender1" Width="100" SelectedIndex="0" ItemsSource="{Binding Naam}" SelectionChanged="CBkalender1_SelectionChanged">
 
                         </ComboBox>
-                        <Button x:Name="BtnVerwijderKalender" Margin="10" Width="Auto" Height="Auto" Content="Verwijder kalender" Click="BtnVerwijderKalender_Click"></Button>
+                        <Button x:Name="BtnVerwijderKalender" Margin="10" Width="Auto" Height="Auto" Content="Verwijder kalender" Click="BtnVerwijderKalender_Click" IsEnabled="{Binding ElementName=CBkalender1,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"></Button>
 
                     </StackPanel>
                     <ListBox x:Name="DayDisplayList" Height="428.8" Width="500" VerticalAlignment="Top" HorizontalAlignment="Center"/>
@@ -61,21 +65,21 @@
                 <GroupBox Header="Nieuw Kalenderitem" Margin="5,0,456.4,0">
                     <StackPanel Margin="0,0,-31,0">
                         <WrapPanel>
-                            <Label>Onderwerp</Label>
+                            <Label Width="100">Onderwerp</Label>
                             <TextBox x:Name="txtOnderwerp" Width="100"></TextBox>
 
                         </WrapPanel>
                         <WrapPanel>
-                            <Label>Beschrijving</Label>
+                            <Label Width="100">Beschrijving</Label>
                             <TextBox x:Name="txtBeschrijving" Width="100" Height="50" AcceptsReturn="True"></TextBox>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label>Locatie</Label>
+                            <Label Width="100">Locatie</Label>
                             <TextBox x:Name="txtLocatie" Width="100">
                             </TextBox>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label>Start uur</Label>
+                            <Label Width="100">Start uur</Label>
 
                             <xctk:DateTimePicker x:Name="dtpStart" Width="100" Format="ShortTime" ShowDropDownButton="False" Value="9:00">
 
@@ -83,18 +87,18 @@
 
                         </WrapPanel>
                         <WrapPanel>
-                            <Label>Eind uur</Label>
+                            <Label Width="100">Eind uur</Label>
                             <xctk:DateTimePicker x:Name="dtpEnd" Width="100" Format="ShortTime" ShowDropDownButton="False" Value="10:00">
 
                             </xctk:DateTimePicker>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label>Beschikbaarheid</Label>
+                            <Label Width="100">Beschikbaarheid</Label>
                             <ComboBox x:Name="CBstatus" Width="100" ItemsSource="{Binding ListOfItems}" SelectedIndex="0">
                             </ComboBox>
                         </WrapPanel>
                         <WrapPanel>
-                            <Label>Kalender</Label>
+                            <Label Width="100">Kalender</Label>
                             <ComboBox x:Name="CBkalender" Width="100" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender_SelectionChanged"></ComboBox>
                         </WrapPanel>
                         <Button Content="Voeg toe" Margin="0,0,26.2,0" Click="BtnNieuweAfspraak_Click"/>

@@ -58,3 +58,4 @@ D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj
 D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.g.resources
 D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
 D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.Cache
+D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\GeneratedInternalTypeHelper.g.cs

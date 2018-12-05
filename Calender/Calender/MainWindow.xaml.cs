@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Calender
@@ -23,18 +25,19 @@ namespace Calender
 
             DataContext = new Status();
 
+            KalenderLijst = DB.SelectKalender();
 
             Cmonth.SelectedDate = DateTime.Today;
 
-            KalenderLijst.Add(new Kalender("Werk", new List<Afspraak>()));
-            KalenderLijst.Add(new Kalender("Thuis", new List<Afspraak>()));
+            //KalenderLijst.Add(new Kalender("Werk", DB.SelectAfspraak()));
+            //KalenderLijst.Add(new Kalender("Thuis", DB.SelectAfspraak()));
             
-            DB.InsertKalender(KalenderLijst.First());
+            //DB.InsertKalender(KalenderLijst.First());
 
             CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = KalenderLijst;
      
-            TestData();
-            UpdateList(KalenderLijst.First());
+            //TestData();
+            //UpdateList(KalenderLijst.First());
 
         }
 
@@ -91,7 +94,7 @@ namespace Calender
 
         private void BtnNieuwKalender_Click(object sender, RoutedEventArgs e)
         {
-            Kalender nieuweKalender = new Kalender(txtKalenderNaam.Text, new List<Afspraak>());
+            Kalender nieuweKalender = new Kalender(0,txtKalenderNaam.Text, new List<Afspraak>());
             DB.InsertKalender(nieuweKalender);
             KalenderLijst.Add(nieuweKalender);
         }
@@ -99,11 +102,11 @@ namespace Calender
         private void BtnVerwijderKalender_Click(object sender, RoutedEventArgs e)
         {
             IKalender result = (IKalender)CBkalender1.SelectedValue;
+            DB.DeleteKalender(result);
             KalenderLijst.Remove(result);
-            //result.Delete();
-            result = null;
-            GC.Collect();
             CBkalender1.SelectedIndex = 0;
+
+            
         }
 
         private void CBkalender2_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -155,6 +158,21 @@ namespace Calender
                 KalenderLijst.First().VoegAfspraakToe(new Afspraak(DateTime.Now, DateTime.Now, $"test{i}", "dit is een test", new Persoon("Tijs", $"De Belie{i}")));
             }
 
+        }
+
+        
+    }
+
+    public class NullToBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value != null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

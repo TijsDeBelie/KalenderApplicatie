@@ -6,18 +6,24 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Calender.Exceptions;
 using System.Data;
+using System.Collections.ObjectModel;
+using Xceed.Wpf.Toolkit;
 
 namespace Calender
 {
+
     public class Sqlconnect
     {
+
+        #region Constructor
         public Sqlconnect()
         {
             Kalender();
             Afspraak();
         }
+        #endregion
 
-
+        #region fields
         public SqlConnection Con { get; set; }
         private string conString { get; set; }
 
@@ -32,6 +38,9 @@ namespace Calender
         private SqlDataAdapter adapterKalender;
         private SqlDataAdapter adapterAfspraak;
 
+        #endregion
+
+        #region Properties
         public SqlDataReader Reader
         {
             get { return reader; }
@@ -45,7 +54,9 @@ namespace Calender
             set { command = value; }
         }
 
+        #endregion
 
+        #region Methods
         public void conOpen()
         {
             conString = @"Data Source = (localdb)\mssqllocaldb; Initial Catalog = KalenderApplicatie; Integrated Security = True; Pooling = False";
@@ -90,12 +101,13 @@ namespace Calender
                 dataset.Tables["Kalender"].Columns["Id"].AutoIncrementSeed = -1;
                 dataset.Tables["Kalender"].Columns["Id"].AutoIncrementStep = -1;
 
+                dataset.Tables["Kalender"].PrimaryKey = new DataColumn[] { dataset.Tables["Kalender"].Columns["Id"]};
 
             }
             else
             {
-
-                throw new Exception();
+                MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
+                Environment.Exit(-1);
             }
 
 
@@ -124,22 +136,22 @@ namespace Calender
                 adapterAfspraak.InsertCommand.Parameters.Add(parameterNewID);
 
                 adapterAfspraak.RowUpdated += AdapterAfspraak_RowUpdated;
-                
+
                 adapterAfspraak.Fill(dataset, "Afspraak");
 
                 dataset.Tables["Afspraak"].Columns["Id"].AutoIncrement = true;
                 dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementSeed = -1;
                 dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementStep = -1;
 
-
+                dataset.Tables["Afspraak"].PrimaryKey = new DataColumn[] { dataset.Tables["Afspraak"].Columns["Id"] };
                 DataRelation relation = new DataRelation("AfspraakKalender", dataset.Tables["Kalender"].Columns["id"], dataset.Tables["Afspraak"].Columns["KalenderId"]);
                 dataset.Relations.Add(relation);
                 relation.ChildKeyConstraint.UpdateRule = Rule.Cascade;
             }
             else
             {
-
-                throw new Exception();
+                MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
+                Environment.Exit(-1);
             }
         }
 
@@ -164,7 +176,7 @@ namespace Calender
             row["endTime"] = (DateTime)afspraak.EndTime;
             row["subject"] = (string)afspraak.Subject;
             row["beschrijving"] = (string)afspraak.Beschrijving;
-            
+
 
             dataset.Tables["Afspraak"].Rows.Add(row);
 
@@ -181,28 +193,126 @@ namespace Calender
 
         public void DeleteKalender(IKalender kalender)
         {
-            DataRow row = dataset.Tables["Kalender"].Rows[0];
+
+            //ObservableCollection<IKalender> kalenderlijst = SelectKalender(kalender);
+
+            //IEnumerable<IKalender> results = kalenderlijst.Where(x => x.Id == kalender.Id);
+
+            DataRow row = dataset.Tables["Kalender"].Rows.Find((int)kalender.Id);
             row.Delete();
-            adapterKalender.Update(dataset, "Afspraak");
+            adapterKalender.Update(dataset, "Kalender");
 
 
         }
-
-        public void SelectAfspraak(Afspraak afspraak)
+        public ObservableCollection<IKalender> SelectKalender(IKalender kalender)
         {
-            DataSet returnDataset = new DataSet();
-            if (dataset.Tables["Afspraak"].Rows.Count > 0)
+            ObservableCollection<IKalender> KalenderLijst = new ObservableCollection<IKalender>();
+            try
             {
-                foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
-                {
-                    if((DateTime)row["startTime"] == afspraak.StartTime)
-                    {
 
-                        //Adding it to the list
+                if (dataset.Tables["Kalender"].Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataset.Tables["Kalender"].Rows)
+                    {
+                        //if((DateTime)row["startTime"] == afspraak.StartTime)
+                        //{
+
+
+                        //}
+
+                        KalenderLijst.Add(new Kalender((int)row["Id"],(string)row["Naam"], SelectAfspraak()));
+
                     }
 
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Een error heeft zich voorgedaan");
+
+            }
+
+            return KalenderLijst;
+        }
+
+        public List<Afspraak> SelectAfspraak(Afspraak afspraak)
+        {
+
+            List<Afspraak> returnlist = new List<Afspraak>();
+            try
+            {
+                if (dataset.Tables["Afspraak"].Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
+                    {
+                        //if((DateTime)row["startTime"] == afspraak.StartTime)
+                        //{
+
+
+                        //}
+
+                        returnlist.Add(new Afspraak((DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"]));
+
+                    }
+
+                }
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Een error heeft zich voorgedaan");
+            }
+            return returnlist;
+        }
+
+        public List<Afspraak> SelectAfspraak()
+        {
+            List<Afspraak> returnlist = new List<Afspraak>();
+
+            if (dataset.Tables["Afspraak"].Rows.Count > 0)
+            {
+                foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
+                {
+                    //if((DateTime)row["startTime"] == afspraak.StartTime)
+                    //{
+
+
+                    //}
+
+                    returnlist.Add(new Afspraak((DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"]));
+
+                }
+
+            }
+            return returnlist;
+        }
+        public ObservableCollection<IKalender> SelectKalender()
+        {
+            ObservableCollection<IKalender> KalenderLijst = new ObservableCollection<IKalender>();
+            try
+            {
+
+                if (dataset.Tables["Kalender"].Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataset.Tables["Kalender"].Rows)
+                    {
+                        //if((DateTime)row["startTime"] == afspraak.StartTime)
+                        //{
+
+
+                        //}
+
+                        KalenderLijst.Add(new Kalender((int)row["id"],(string)row["Naam"], SelectAfspraak()));
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Een error heeft zich voorgedaan!");
+
+            }
+
+            return KalenderLijst;
         }
 
 
@@ -230,6 +340,6 @@ namespace Calender
             Con.Close();//close the connection
         }
 
-
+        #endregion
     }
 }

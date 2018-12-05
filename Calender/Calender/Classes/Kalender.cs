@@ -13,24 +13,14 @@ namespace Calender
 {
     public class Kalender : IKalender
     {
-
-        public Kalender(string naam, List<Afspraak> afsprakenLijst)
-        {
-            Naam = naam;
-            AfsprakenLijst = afsprakenLijst;
-
-        }
-        public Kalender(string naam, string beschrijving, List<Afspraak> afsprakenLijst)
-        {
-            Naam = naam;
-            AfsprakenLijst = afsprakenLijst;
-            Beschrijving = beschrijving;
-
-        }
-
-
+        #region Fields
         private string naam;
-        
+        private string beschrijving;
+        private int id;
+
+        #endregion
+
+        #region Properties
 
         public string Naam
         {
@@ -44,13 +34,63 @@ namespace Calender
                 {
                     naam = value;
                 }
-                else { throw new NameIsEmpty("Kalender"); }
+                else { throw new NameIsEmpty("KalenderNaam"); }
             }
         }
 
-        public string Beschrijving { get; set; }
+        public string Beschrijving
+        {
+            get
+            {
+                return naam;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    naam = value;
+                }
+                else { throw new NameIsEmpty("KalenderBeschrijving"); }
+            }
+        }
+
+        public int Id
+        {
+            get
+            {
+                return id;
+            }
+            set { id = value; }
+        }
+
+        public DataRow row { get; }
 
         public IList<Afspraak> AfsprakenLijst { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        public Kalender(int id, string naam, List<Afspraak> afsprakenLijst)
+        {
+            Id = id;
+            Naam = naam;
+            AfsprakenLijst = afsprakenLijst;
+
+        }
+        public Kalender(int id, string naam, string beschrijving, List<Afspraak> afsprakenLijst)
+        {
+            Id = id;
+            Naam = naam;
+            AfsprakenLijst = afsprakenLijst;
+            Beschrijving = beschrijving;
+
+        }
+        #endregion
+
+        #region Methods
+
+
         public void VoegAfspraakToe(Afspraak afspraak)
         {
             AfsprakenLijst.Add(afspraak);
@@ -71,5 +111,5 @@ namespace Calender
 
 
     }
-
+    #endregion
 }
