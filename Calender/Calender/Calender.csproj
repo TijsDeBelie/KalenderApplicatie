@@ -79,9 +79,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\IAfspraak.cs" />
     <Compile Include="Classes\IKalender.cs" />
     <Compile Include="Classes\Locatie.cs" />
-    <Compile Include="Classes\Persoon.cs" />
     <Compile Include="Classes\Status.cs" />
     <Compile Include="Exceptions\DBInsertFailed.cs" />
     <Compile Include="Exceptions\NameIsEmpty.cs" />
@@ -95,9 +95,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Classes\Afspraak.cs" />
-    <Compile Include="Classes\IAfspraak.cs" />
     <Compile Include="Classes\Kalender.cs" />
     <Compile Include="Exceptions\DBConnectFailed.cs" />
+    <Compile Include="Exceptions\StartDateIsBeforeEndDate.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -11,34 +11,130 @@ namespace Calender
 {
     public class Afspraak : IAfspraak
     {
-        public Afspraak(DateTime startTime, DateTime endTime, string subject, string beschrijving) : this(startTime, endTime, subject, beschrijving, null){}
-        public Afspraak(DateTime startTime, DateTime endTime, string subject, string beschrijving, Persoon persoon) : this(startTime, endTime, subject, beschrijving, persoon, null){}
-        public Afspraak(DateTime startTime, DateTime endTime, string subject, string beschrijving, Persoon persoon, Locatie locatie)
+        public Afspraak(int id,DateTime startTime, DateTime endTime, string subject, string beschrijving) : this(id, startTime, endTime, subject, beschrijving, null){}
+        public Afspraak(int id, DateTime startTime, DateTime endTime, string subject, string beschrijving, Locatie locatie)
         {
+            Id = id;
             StartTime = startTime;
             EndTime = endTime;
             Subject = subject;
             Beschrijving = beschrijving;
-            Persoon = persoon;
             Locatie = locatie;
         }
+        private DateTime _startTime;
+        private DateTime _endTime;
+        private string _subject;
+        private string _beschrijving;
+        private int _id;
 
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public string Subject { get; set; }
+        public int Id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (value >= 0)
+                {
+                    _id = value;
+                }else
+                {
 
-        public Persoon Persoon { get; set; }
+                    throw new NameIsEmpty("Afspraak ID");
+                }
 
-        public string Beschrijving { get; set; }
+            }
+        }
 
+
+        public DateTime StartTime {
+            get
+            {
+                return _startTime;
+            }
+            set
+            {
+                if (value != DateTime.MinValue)
+                {
+                    _startTime = value;
+                }else
+                {
+                    throw new NameIsEmpty("Afspraak StartTijd");
+
+                }
+                
+            }
+        }
+        public DateTime EndTime {
+            get
+            {
+                return _endTime;
+            }
+            set
+            {
+                if (value != DateTime.MinValue)
+                {
+                    _endTime = value;
+                }else
+                {
+                    throw new NameIsEmpty("Afspraak EindTijd");
+
+                }
+                
+            }
+        }
+        public string Subject {
+            get
+            {
+                return _subject;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _subject = value;
+                }
+                else
+                {
+                    throw new NameIsEmpty("Afspraak Naam");
+
+                }
+
+            }
+        }
+        public string Beschrijving
+        {
+            get
+            {
+                return _beschrijving;
+            }
+            set
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _beschrijving = value;
+                }
+                else
+                {
+                    throw new NameIsEmpty("Afspraak Beschrijving");
+
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Locatie van de afspraak, wordt momenteel nog niet gebruikt
+        /// </summary>
         public Locatie Locatie { get; set; }
 
 
         public override string ToString()
         {
-            if (Locatie == null && Persoon != null) return $"{StartTime}, {EndTime}, {Subject}: {Beschrijving} met {Persoon}";
-            else if (Locatie != null && Persoon == null) return $"{StartTime}, {EndTime}, {Subject}: {Beschrijving} in {Locatie}";
-            else return $"{StartTime}, {EndTime}, {Subject}: {Beschrijving} in {Locatie} met {Persoon}";
+            if (Locatie == null && Beschrijving != null) return $"{StartTime}, {EndTime}, {Subject}: {Beschrijving}";
+            else if (Locatie != null && Beschrijving != null) return $"{StartTime}, {EndTime}, {Subject}: {Beschrijving} in {Locatie}";
+            else return $"{StartTime}, {EndTime}, {Subject}: {Beschrijving} in {Locatie}";
         }
 
     }

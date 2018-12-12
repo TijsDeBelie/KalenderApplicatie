@@ -34,7 +34,7 @@ namespace Calender
                 {
                     naam = value;
                 }
-                else { throw new NameIsEmpty("KalenderNaam"); }
+                else { throw new NameIsEmpty("Kalender Naam"); }
             }
         }
 
@@ -42,15 +42,15 @@ namespace Calender
         {
             get
             {
-                return naam;
+                return beschrijving;
             }
             set
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    naam = value;
+                    beschrijving = value;
                 }
-                else { throw new NameIsEmpty("KalenderBeschrijving"); }
+                else { throw new NameIsEmpty("Kalender Beschrijving"); }
             }
         }
 
@@ -65,20 +65,14 @@ namespace Calender
 
         public DataRow row { get; }
 
-        public IList<Afspraak> AfsprakenLijst { get; set; }
+        public IList<IAfspraak> AfsprakenLijst { get; set; }
 
         #endregion
 
         #region Constructors
 
-        public Kalender(int id, string naam, List<Afspraak> afsprakenLijst)
-        {
-            Id = id;
-            Naam = naam;
-            AfsprakenLijst = afsprakenLijst;
 
-        }
-        public Kalender(int id, string naam, string beschrijving, List<Afspraak> afsprakenLijst)
+        public Kalender(int id, string naam, string beschrijving, List<IAfspraak> afsprakenLijst)
         {
             Id = id;
             Naam = naam;
@@ -91,7 +85,7 @@ namespace Calender
         #region Methods
 
 
-        public void VoegAfspraakToe(Afspraak afspraak)
+        public void VoegAfspraakToe(IAfspraak afspraak)
         {
             AfsprakenLijst.Add(afspraak);
 

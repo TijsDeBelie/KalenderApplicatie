@@ -5,7 +5,7 @@ namespace Calender
 {
     public interface IKalender
     {
-        IList<Afspraak> AfsprakenLijst { get; set; }
+        IList<IAfspraak> AfsprakenLijst { get; set; }
         string Beschrijving { get; set; }
         int Id { get; set; }
         string Naam { get; set; }
@@ -13,6 +13,6 @@ namespace Calender
 
         void Delete();
         string ToString();
-        void VoegAfspraakToe(Afspraak afspraak);
+        void VoegAfspraakToe(IAfspraak afspraak);
     }
 }

@@ -6,20 +6,22 @@
         xmlns:local="clr-namespace:Calender"
         mc:Ignorable="d"
         WindowState="Maximized"
+        
       
         
-        Title="Kalenderapplicatie" Height="Auto" Width="1406.514">
+        Title="Kalenderapplicatie" Height="827.5" Width="1406.514">
     <Window.Resources>
         <local:NullToBooleanConverter x:Key="NullToBooleanConverter"></local:NullToBooleanConverter>
     </Window.Resources>
-    <Grid>
-        <TabControl x:Name="TabCalender" Height="Auto" Width="Auto" Margin="0,0,-0.4,-0.4">
-            <TabItem Header="Calender">
-                <DockPanel x:Name="KalenderView" LastChildFill="True" Height="Auto" Width="Auto">
+    <Grid x:Name="grid_main">
+        <TabControl x:Name="TabCalender" Height="Auto" Width="Auto">
+            <TabItem Header="Overzicht kalenders en afspraken" Height="45">
+                <DockPanel x:Name="KalenderView" LastChildFill="false" Height="Auto" Width="Auto">
 
-                    <Label DockPanel.Dock="Top" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top">Datum</Label>
-                    <TextBox DockPanel.Dock="Top"  x:Name="txtDate" Height="23" Width="120" Margin="318,0,956.4,0"/>
-                    <Calendar DockPanel.Dock="Right" x:Name="Cmonth"
+
+                    <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
+                     
+                        <Calendar  x:Name="Cmonth"
                                 SelectionMode="SingleRange" 
                                 FirstDayOfWeek="Monday"  
                                 IsTodayHighlighted="True"
@@ -27,81 +29,164 @@
                                 RenderTransformOrigin="0.5,0.5"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
-                                Width="178"
                                 SelectedDatesChanged="Cmonth_SelectedDatesChanged"
                                 MouseRightButtonDown="Cmonth_MouseRightButtonDown">
-                        <Calendar.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform ScaleX="3" ScaleY="3"/>
-                                <SkewTransform/>
-                                <RotateTransform/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Calendar.RenderTransform>
-                    </Calendar>
-                    <StackPanel DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left">
-                        <TextBox x:Name="txtKalenderNaam" Margin="10" Width="Auto" Height="Auto"></TextBox>
-                        <Button x:Name="BtnNieuwKalender" Margin="10" Width="Auto" Height="Auto" Content="Nieuwe kalender" Click="BtnNieuwKalender_Click"></Button>
-                        <ComboBox x:Name="CBkalender1" Width="100" SelectedIndex="0" ItemsSource="{Binding Naam}" SelectionChanged="CBkalender1_SelectionChanged">
+                            <Calendar.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Calendar.RenderTransform>
+                        </Calendar>
+                    </StackPanel>
+                    <StackPanel DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" ToolTip="Voeg een nieuwe kalender toe, selecteer de gewenste kalender, of verwijder de geselecteerde">
+                        <TextBlock Height="auto" TextWrapping="Wrap">
+                            <Run Text="Voeg een nieuwe kalender toe,"/>
+                             <LineBreak/>
+                            <Run Text="verander de getoonde kalender"/>
+                             <LineBreak/>
+                            <Run Text="of verwijder de geselecteerde agenda."/>
+                             <LineBreak/>
+                        </TextBlock>
+                       
+                        <WrapPanel Margin="0,100,0,0">
+                            <Label Width="150">Kalender Naam</Label>
+                            <TextBox x:Name="txtKalenderNaam" Margin="2" Width="120" Height="Auto"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel>
+                            <Label Width="150">Kalender Beschrijving</Label>
+                            <TextBox x:Name="txtKalenderBeschrijving" Margin="2" Width="120" Height="Auto"></TextBox>
+                        </WrapPanel>
+                        <Button x:Name="BtnNieuwKalender" Margin="2" Width="Auto" Height="Auto" Content="Nieuwe kalender" Click="BtnNieuwKalender_Click"></Button>
+                        <StackPanel Margin="0,20,0,20"><Label Width="auto">Selecteer zichtbare kalender</Label>
+                        <ComboBox x:Name="CBkalender1" Width="Auto" SelectedIndex="0" ItemsSource="{Binding Naam}" SelectionChanged="CBkalender1_SelectionChanged">
 
                         </ComboBox>
-                        <Button x:Name="BtnVerwijderKalender" Margin="10" Width="Auto" Height="Auto" Content="Verwijder kalender" Click="BtnVerwijderKalender_Click" IsEnabled="{Binding ElementName=CBkalender1,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"></Button>
+                        </StackPanel>
+                        <Button x:Name="BtnVerwijderKalender" Margin="2" Width="Auto" Height="Auto" Content="Verwijder geselecteerde kalender" Click="BtnVerwijderKalender_Click" IsEnabled="{Binding ElementName=CBkalender1,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"></Button>
 
                     </StackPanel>
-                    <ListBox x:Name="DayDisplayList" Height="428.8" Width="500" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    <StackPanel Width="Auto" DockPanel.Dock="Top" VerticalAlignment="Center">
+                        <Label  Width="200">Geselecteerde datumrange</Label>
+                        <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=Width, ElementName=DayDisplayList}" IsEnabled="False"/>
+                        <ListBox x:Name="DayDisplayList" Height="500" Width="500" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="120,0"/>
+                    </StackPanel>
+                   
                 </DockPanel>
             </TabItem>
-            <TabItem Header="Calenderitems">
-                <StackPanel>
-                    <ComboBox x:Name="CBkalender2" Width="Auto" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender2_SelectionChanged"></ComboBox>
-                    <ListBox x:Name="DisplayList" ScrollViewer.VerticalScrollBarVisibility="Visible" MaxHeight="400"/>
-                    <WrapPanel Width="Auto">
-                        <Button x:Name="BtnWijzig" Width="100" Height="Auto" Content="Wijzig"></Button>
-                        <Button x:Name="BtnVerwijder" Width="100" Height="Auto" Content="Verwijder"></Button>
+            <TabItem Header="Afspraken per kalender">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="1*" />
+
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <WrapPanel Width="{Binding ElementName=grid_Main,Path=ActualWidth}"
+>
+                            <Label Width="150">Kalenderselectie : </Label>
+                            <ComboBox x:Name="CBkalender2" Width="400" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender2_SelectionChanged"></ComboBox>
+                        </WrapPanel>
+                        <ListView x:Name="DisplayList" ScrollViewer.VerticalScrollBarVisibility="Visible" MaxHeight="400" SelectionChanged="DisplayList_SelectionChanged"/>
+                        
+                    </StackPanel>
+                    <WrapPanel  Grid.Row="1">
+                        <StackPanel Margin="20">
+                            <Label>Wijzig geslecteerde kalender</Label>
+                            <WrapPanel Margin="5">
+                                <Label Width="150">ID</Label>
+                                <TextBox Name="txtKalenderID" Width="300" IsEnabled="False"></TextBox>
+                            </WrapPanel>
+                            <WrapPanel Margin="5">
+                                <Label Width="150">Naam</Label>
+                                <TextBox Name="txtKalenderNaam2" Width="300"></TextBox>
+                            </WrapPanel>
+                            <WrapPanel Margin="5">
+                                <Label Width="150">Beschrijving</Label>
+                                <TextBox Name="txtKalenderBeschrijving2" Width="300"></TextBox>
+                            </WrapPanel>
+                            <WrapPanel Margin="0,20,0,0">
+                                <Button x:Name="BtnWijzigKalender" Width="600" Height="Auto" Content="Wijzig" IsEnabled="{Binding ElementName=CBkalender2,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnWijzigKalender_Click"></Button>
+                                
+                            </WrapPanel>
+                        </StackPanel>
+                        <StackPanel Margin="20">
+                            <Label>Wijzig geselecteerde afspraak</Label>
+                        <WrapPanel Margin="5">
+                            <Label Width="150">ID</Label>
+                            <TextBox Name="txtAfspraakID" Width="300" IsEnabled="False"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="5">
+                            <Label Width="150">Onderwerp</Label>
+                            <TextBox Name="txtAfspraakTitel" Width="300"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="5">
+                            <Label Width="150">Beschrijving</Label>
+                            <TextBox Name="txtAfspraakBeschrijving" Width="300"></TextBox>
+                        </WrapPanel>
+                        <WrapPanel Margin="5">
+                            <Label Width="150">StartTijd</Label>
+                            <xctk:DateTimePicker Name="txtAfspraakStart" Width="300" ShowDropDownButton="False"></xctk:DateTimePicker>
+                        </WrapPanel>
+                        <WrapPanel Margin="5">
+                            <Label Width="150">EindTijd</Label>
+                                <xctk:DateTimePicker Name="txtAfspraakEind" Width="300" ShowDropDownButton="False"></xctk:DateTimePicker>
+                        </WrapPanel>
+                        <WrapPanel Margin="5">
+                            <Label Width="150">Verander Kalender</Label>
+                            <ComboBox x:Name="CBkalender3" Width="300" SelectedIndex="0" ItemsSource="{Binding Naam}"></ComboBox>
+                        </WrapPanel>
+                            <WrapPanel Margin="0,20,0,0">
+                                <Button x:Name="BtnWijzig" Width="300" Height="Auto" Content="Wijzig" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnWijzig_Click"></Button>
+                                <Button x:Name="BtnVerwijder" Width="300" Height="Auto" Content="Verwijder" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnVerwijder_Click"></Button>
+                            </WrapPanel>
+                        </StackPanel>
                     </WrapPanel>
-                </StackPanel>
+                </Grid>
             </TabItem>
-            <TabItem Header="Details">
+            <TabItem Header="Nieuwe afspraak">
                 <GroupBox Header="Nieuw Kalenderitem" Margin="5,0,456.4,0">
                     <StackPanel Margin="0,0,-31,0">
                         <WrapPanel>
                             <Label Width="100">Onderwerp</Label>
-                            <TextBox x:Name="txtOnderwerp" Width="100"></TextBox>
+                            <TextBox x:Name="txtOnderwerp" Width="300"></TextBox>
 
                         </WrapPanel>
                         <WrapPanel>
                             <Label Width="100">Beschrijving</Label>
-                            <TextBox x:Name="txtBeschrijving" Width="100" Height="50" AcceptsReturn="True"></TextBox>
+                            <TextBox x:Name="txtBeschrijving" Width="300" Height="50" AcceptsReturn="True"></TextBox>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Width="100">Locatie</Label>
-                            <TextBox x:Name="txtLocatie" Width="100">
+                            <TextBox x:Name="txtLocatie" Width="300">
                             </TextBox>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Width="100">Start uur</Label>
 
-                            <xctk:DateTimePicker x:Name="dtpStart" Width="100" Format="ShortTime" ShowDropDownButton="False" Value="9:00">
+                            <xctk:DateTimePicker x:Name="dtpStart" Width="300" Format="FullDateTime" DisplayDefaultValueOnEmptyText="False" DefaultValue="05/05/05" ShowDropDownButton="False">
 
                             </xctk:DateTimePicker>
 
                         </WrapPanel>
                         <WrapPanel>
                             <Label Width="100">Eind uur</Label>
-                            <xctk:DateTimePicker x:Name="dtpEnd" Width="100" Format="ShortTime" ShowDropDownButton="False" Value="10:00">
+                            <xctk:DateTimePicker x:Name="dtpEnd" Width="300" Format="FullDateTime" DisplayDefaultValueOnEmptyText="False" DefaultValue="05/05/05" ShowDropDownButton="False">
 
                             </xctk:DateTimePicker>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Width="100">Beschikbaarheid</Label>
-                            <ComboBox x:Name="CBstatus" Width="100" ItemsSource="{Binding ListOfItems}" SelectedIndex="0">
+                            <ComboBox x:Name="CBstatus" Width="300" ItemsSource="{Binding ListOfItems}" SelectedIndex="0">
                             </ComboBox>
                         </WrapPanel>
                         <WrapPanel>
                             <Label Width="100">Kalender</Label>
-                            <ComboBox x:Name="CBkalender" Width="100" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender_SelectionChanged"></ComboBox>
+                            <ComboBox x:Name="CBkalender" Width="300" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender_SelectionChanged"></ComboBox>
                         </WrapPanel>
-                        <Button Content="Voeg toe" Margin="0,0,26.2,0" Click="BtnNieuweAfspraak_Click"/>
+                        <Button Content="Voeg toe" Margin="0,0,26.2,0" Click="BtnNieuweAfspraak_Click" IsEnabled="{Binding ElementName=CBkalender,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"/>
                     </StackPanel>
                 </GroupBox>
             </TabItem>

@@ -9,6 +9,7 @@ using System.Data;
 using System.Collections.ObjectModel;
 using Xceed.Wpf.Toolkit;
 
+
 namespace Calender
 {
 
@@ -27,7 +28,6 @@ namespace Calender
         public SqlConnection Con { get; set; }
         private string conString { get; set; }
 
-        private SqlDataReader reader;
         private SqlCommand command;
         private SqlCommandBuilder builder;
         private SqlParameter parameter;
@@ -41,11 +41,7 @@ namespace Calender
         #endregion
 
         #region Properties
-        public SqlDataReader Reader
-        {
-            get { return reader; }
-            set { reader = value; }
-        }
+
 
 
         public SqlCommand Command
@@ -59,99 +55,126 @@ namespace Calender
         #region Methods
         public void conOpen()
         {
-            conString = @"Data Source = (localdb)\mssqllocaldb; Initial Catalog = KalenderApplicatie; Integrated Security = True; Pooling = False";
-            Con = new SqlConnection(conString);//
+            conString = @"Data Source = (localdb)\mssqllocaldb; Initial Catalog = AD3_Kalender_TijsDeBelie; Integrated Security = True; Pooling = False";
+            //Dit is wanneer je met de .mdf file wilt werken
+            //conString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = 'D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\AD3_Kalender_TijsDeBelie.mdf'; Integrated Security = True; Connect Timeout = 30";
+
+            
+            
+            Con = new SqlConnection(conString);
             try
             {
                 Con.Open();
             }
             catch (Exception ex)
             {
-                throw new DBConnectFailed("Sqlconnect class");
+                throw new DBConnectFailed("Sqlconnect class\n" + ex.Message);
             }
         }
 
         public void Kalender()
         {
-            conOpen();
-            if (Con != null && Con.State == ConnectionState.Open)
+            try
             {
-                adapterKalender = new SqlDataAdapter("select * from tblKalender", Con);
-                builder = new SqlCommandBuilder(adapterKalender);
-                adapterKalender.InsertCommand = builder.GetInsertCommand().Clone();
-                adapterKalender.UpdateCommand = builder.GetUpdateCommand().Clone();
-                adapterKalender.DeleteCommand = builder.GetDeleteCommand().Clone();
+                conOpen();
+                if (Con != null && Con.State == ConnectionState.Open)
+                {
+                    adapterKalender = new SqlDataAdapter("select * from tblKalender", Con);
+                    builder = new SqlCommandBuilder(adapterKalender);
+                    adapterKalender.InsertCommand = builder.GetInsertCommand().Clone();
+                    adapterKalender.UpdateCommand = builder.GetUpdateCommand().Clone();
+                    adapterKalender.DeleteCommand = builder.GetDeleteCommand().Clone();
 
-                builder.Dispose();
+                    builder.Dispose();
 
-                adapterKalender.InsertCommand.CommandText += " set @newid = scope_identity()";
+                    adapterKalender.InsertCommand.CommandText += " set @newid = scope_identity()";
 
-                parameter = new SqlParameter("@newid", 0);
-                parameter.SqlDbType = SqlDbType.Int;
-                parameter.Size = 4;
-                parameter.Direction = ParameterDirection.Output;
+                    parameter = new SqlParameter("@newid", 0);
+                    parameter.SqlDbType = SqlDbType.Int;
+                    parameter.Size = 4;
+                    parameter.Direction = ParameterDirection.Output;
 
-                adapterKalender.InsertCommand.Parameters.Add(parameter);
-                adapterKalender.RowUpdated += AdapterKalender_RowUpdated;
+                    adapterKalender.InsertCommand.Parameters.Add(parameter);
+                    adapterKalender.RowUpdated += AdapterKalender_RowUpdated;
 
 
-                adapterKalender.Fill(dataset, "Kalender");
+                    adapterKalender.Fill(dataset, "Kalender");
 
-                dataset.Tables["Kalender"].Columns["Id"].AutoIncrement = true;
-                dataset.Tables["Kalender"].Columns["Id"].AutoIncrementSeed = -1;
-                dataset.Tables["Kalender"].Columns["Id"].AutoIncrementStep = -1;
+                    dataset.Tables["Kalender"].Columns["Id"].AutoIncrement = true;
+                    dataset.Tables["Kalender"].Columns["Id"].AutoIncrementSeed = -1;
+                    dataset.Tables["Kalender"].Columns["Id"].AutoIncrementStep = -1;
 
-                dataset.Tables["Kalender"].PrimaryKey = new DataColumn[] { dataset.Tables["Kalender"].Columns["Id"]};
+                    dataset.Tables["Kalender"].PrimaryKey = new DataColumn[] { dataset.Tables["Kalender"].Columns["Id"] };
 
+
+
+                    adapterKalender.Update(dataset, "Kalender");
+                }
+                else
+                {
+                    MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
+                    Environment.Exit(-1);
+                }
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
+                MessageBox.Show("Er kwam een error voor bij het initialiseren van de database tabel kalender\nHet programma sluit nu af!");
                 Environment.Exit(-1);
             }
-
-
         }
 
         public void Afspraak()
         {
-            conOpen();
-            if (Con != null && Con.State == ConnectionState.Open)
+            try
             {
-                adapterAfspraak = new SqlDataAdapter("select * from tblAfspraak", Con);
-                builder = new SqlCommandBuilder(adapterAfspraak);
-                adapterAfspraak.InsertCommand = builder.GetInsertCommand().Clone();
-                adapterAfspraak.UpdateCommand = builder.GetUpdateCommand().Clone();
-                adapterAfspraak.DeleteCommand = builder.GetDeleteCommand().Clone();
+                conOpen();
+                if (Con != null && Con.State == ConnectionState.Open)
+                {
+                    adapterAfspraak = new SqlDataAdapter("select * from tblAfspraak", Con);
+                    builder = new SqlCommandBuilder(adapterAfspraak);
+                    adapterAfspraak.InsertCommand = builder.GetInsertCommand().Clone();
+                    adapterAfspraak.UpdateCommand = builder.GetUpdateCommand().Clone();
+                    adapterAfspraak.DeleteCommand = builder.GetDeleteCommand().Clone();
 
-                builder.Dispose();
+                    builder.Dispose();
 
-                adapterAfspraak.InsertCommand.CommandText += " set @id = scope_identity()";
+                    adapterAfspraak.InsertCommand.CommandText += " set @id = scope_identity()";
 
-                SqlParameter parameterNewID = new SqlParameter("@id", 0);
-                parameterNewID.SqlDbType = SqlDbType.Int;
-                parameterNewID.Size = 4;
-                parameterNewID.Direction = ParameterDirection.Output;
+                    SqlParameter parameterNewID = new SqlParameter("@id", 0);
+                    parameterNewID.SqlDbType = SqlDbType.Int;
+                    parameterNewID.Size = 4;
+                    parameterNewID.Direction = ParameterDirection.Output;
 
-                adapterAfspraak.InsertCommand.Parameters.Add(parameterNewID);
+                    adapterAfspraak.InsertCommand.Parameters.Add(parameterNewID);
 
-                adapterAfspraak.RowUpdated += AdapterAfspraak_RowUpdated;
+                    adapterAfspraak.RowUpdated += AdapterAfspraak_RowUpdated;
 
-                adapterAfspraak.Fill(dataset, "Afspraak");
+                    adapterAfspraak.Fill(dataset, "Afspraak");
 
-                dataset.Tables["Afspraak"].Columns["Id"].AutoIncrement = true;
-                dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementSeed = -1;
-                dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementStep = -1;
+                    dataset.Tables["Afspraak"].Columns["Id"].AutoIncrement = true;
+                    dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementSeed = -1;
+                    dataset.Tables["Afspraak"].Columns["Id"].AutoIncrementStep = -1;
 
-                dataset.Tables["Afspraak"].PrimaryKey = new DataColumn[] { dataset.Tables["Afspraak"].Columns["Id"] };
-                DataRelation relation = new DataRelation("AfspraakKalender", dataset.Tables["Kalender"].Columns["id"], dataset.Tables["Afspraak"].Columns["KalenderId"]);
-                dataset.Relations.Add(relation);
-                relation.ChildKeyConstraint.UpdateRule = Rule.Cascade;
+                    dataset.Tables["Afspraak"].PrimaryKey = new DataColumn[] { dataset.Tables["Afspraak"].Columns["Id"] };
+                    DataRelation relationAfspraak = new DataRelation("AfspraakKalender", dataset.Tables["Kalender"].Columns["Id"], dataset.Tables["Afspraak"].Columns["KalenderID"]);
+                    dataset.Relations.Add(relationAfspraak);
+                    relationAfspraak.ChildKeyConstraint.UpdateRule = Rule.Cascade;
+
+                    dataset.Tables["Afspraak"].PrimaryKey = new DataColumn[] { dataset.Tables["Afspraak"].Columns["Id"] };
+
+                    adapterAfspraak.Update(dataset, "Afspraak");
+                }
+                else
+                {
+                    MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
+                    Environment.Exit(-1);
+                }
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
-                Environment.Exit(-1);
+
+                MessageBox.Show("Er kwam een error voor bij de initialisatie van de database tabel Afspraak!\nHet programma sluit nu af!");
+                Environment.Exit(1);
             }
         }
 
@@ -161,47 +184,88 @@ namespace Calender
 
         public void InsertKalender(IKalender kalender)
         {
-            row = dataset.Tables["Kalender"].NewRow();
-            row["Naam"] = kalender.Naam;
-            dataset.Tables["Kalender"].Rows.Add(row);
-            adapterKalender.Update(dataset, "Kalender");
+            try
+            {
+                row = dataset.Tables["Kalender"].NewRow();
+                row["Naam"] = kalender.Naam;
+                row["Beschrijving"] = kalender.Beschrijving;
+                dataset.Tables["Kalender"].Rows.Add(row);
+                adapterKalender.Update(dataset, "Kalender");
+                MessageBox.Show("Nieuwe Kalender is toegevoegd");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kon de nieuwe kalender niet invoegen\n" + ex.Message);
+            }
         }
 
-        public void InsertAfspraak(Afspraak afspraak)
+        public void InsertAfspraak(Afspraak afspraak, IKalender kalender)
         {
 
             row = dataset.Tables["Afspraak"].NewRow();
 
             row["startTime"] = (DateTime)afspraak.StartTime;
             row["endTime"] = (DateTime)afspraak.EndTime;
-            row["subject"] = (string)afspraak.Subject;
-            row["beschrijving"] = (string)afspraak.Beschrijving;
+            row["subject"] = (string)afspraak.Subject ?? "Lege naam";
+            row["beschrijving"] = (string)afspraak.Beschrijving ?? "Lege beschrijving";
+            row["KalenderID"] = (int)kalender.Id;
 
 
             dataset.Tables["Afspraak"].Rows.Add(row);
 
             adapterAfspraak.Update(dataset, "Afspraak");
+            MessageBox.Show("Nieuwe Afspraak is toegevoegd");
 
         }
 
         public void DeleteAfspraak(Afspraak afspraak)
         {
-            DataRow row = dataset.Tables["Afspraak"].Rows[0];
-            row.Delete();
-            adapterAfspraak.Update(dataset, "Afspraak");
+            try
+            {
+
+                DataRow row = dataset.Tables["Afspraak"].Rows.Find((int)afspraak.Id);
+                row.Delete();
+                adapterAfspraak.Update(dataset, "Afspraak");
+
+                MessageBox.Show("Afspraak is verwijderd");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kon afspraak niet verwijderen\n" + ex.Message);
+
+            }
         }
 
         public void DeleteKalender(IKalender kalender)
         {
+            try
+            {
+                //ObservableCollection<IKalender> kalenderlijst = SelectKalender(kalender);
 
-            //ObservableCollection<IKalender> kalenderlijst = SelectKalender(kalender);
+                //IEnumerable<IKalender> results = kalenderlijst.Where(x => x.Id == kalender.Id);
 
-            //IEnumerable<IKalender> results = kalenderlijst.Where(x => x.Id == kalender.Id);
+                foreach (DataRow rowAfspraak in dataset.Tables["Afspraak"].Rows)
+                {
+                    if ((int)rowAfspraak[5] == kalender.Id)
+                    {
+                        rowAfspraak.Delete();
 
-            DataRow row = dataset.Tables["Kalender"].Rows.Find((int)kalender.Id);
-            row.Delete();
-            adapterKalender.Update(dataset, "Kalender");
+                    }
 
+
+                }
+                adapterAfspraak.Update(dataset, "Afspraak");
+
+                DataRow row = dataset.Tables["Kalender"].Rows.Find((int)kalender.Id);
+                row.Delete();
+                adapterKalender.Update(dataset, "Kalender");
+                MessageBox.Show("Kalender is verwijderd");
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Kon kalender niet verwijderen!\n" + ex.Message);
+            }
 
         }
         public ObservableCollection<IKalender> SelectKalender(IKalender kalender)
@@ -214,13 +278,85 @@ namespace Calender
                 {
                     foreach (DataRow row in dataset.Tables["Kalender"].Rows)
                     {
-                        //if((DateTime)row["startTime"] == afspraak.StartTime)
-                        //{
+                        KalenderLijst.Add(new Kalender((int)row["Id"], (string)row["Naam"], (string)row["Beschrijving"], SelectAfspraak()));
+                    }
 
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de kalenders!\n" + ex.Message);
 
-                        //}
+            }
 
-                        KalenderLijst.Add(new Kalender((int)row["Id"],(string)row["Naam"], SelectAfspraak()));
+            return KalenderLijst;
+        }
+
+        public void UpdateAfspraak(int Id, DateTime StartTime, DateTime EndTime, string Subject, string Beschrijving, IKalender kalender)
+        {
+            try
+            {
+                if (dataset.Tables["Afspraak"].Rows.Count > 0)
+                {
+                    DataRow row = dataset.Tables["Afspraak"].Rows.Find((int)Id);
+                    row[1] = StartTime;
+                    row[2] = EndTime;
+                    row[3] = Subject ?? "Lege Naam";
+                    row[4] = Beschrijving ?? "Lege Beschrijving";
+                    row[5] = kalender.Id;
+
+                    adapterAfspraak.Update(dataset, "Afspraak");
+                    MessageBox.Show("Afspraak is gewijzigd");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kon Afspraak niet wijzigen!\n" + ex.Message);
+
+            }
+        }
+
+        public void Updatekalender(int Id, string Naam, string Beschrijving, IKalender kalender)
+        {
+            try
+            {
+
+                if (dataset.Tables["Kalender"].Rows.Count > 0)
+                {
+                    DataRow row = dataset.Tables["Kalender"].Rows.Find((int)Id);
+
+                    row[1] = Naam;
+                    row[2] = Beschrijving;
+                    adapterKalender.Update(dataset, "Kalender");
+                    MessageBox.Show("Kalender is gewijzigd");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Kon Kalender niet wijzigen\n" + ex.Message);
+            }
+
+        }
+
+        public List<IAfspraak> SelectAfspraak(IKalender kalender)
+        {
+
+            List<IAfspraak> returnlist = new List<IAfspraak>();
+            try
+            {   //TODO vind record in juiste kolom, niet via primary key value
+                //DataRow results = dataset.Tables["Afspraak"].Rows.Find((int)kalender.Id);
+
+                if (dataset.Tables["Afspraak"].Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
+                    {
+                        if ((int)row[5] == kalender.Id) //ROW 5 IS NULL
+                        {
+                            returnlist.Add(new Afspraak((int)row["Id"], (DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"]));
+
+                        }
+
 
                     }
 
@@ -228,58 +364,27 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Een error heeft zich voorgedaan");
-
+                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message);
             }
-
-            return KalenderLijst;
+            return returnlist;
         }
 
-        public List<Afspraak> SelectAfspraak(Afspraak afspraak)
+        public List<IAfspraak> SelectAfspraak()
         {
-
-            List<Afspraak> returnlist = new List<Afspraak>();
+            List<IAfspraak> returnlist = new List<IAfspraak>();
             try
             {
                 if (dataset.Tables["Afspraak"].Rows.Count > 0)
                 {
                     foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
                     {
-                        //if((DateTime)row["startTime"] == afspraak.StartTime)
-                        //{
-
-
-                        //}
-
-                        returnlist.Add(new Afspraak((DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"]));
-
+                        returnlist.Add(new Afspraak((int)row["Id"], (DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["Subject"], (string)row["Beschrijving"]));
                     }
-
                 }
-            }catch(Exception ex)
-            {
-                MessageBox.Show("Een error heeft zich voorgedaan");
             }
-            return returnlist;
-        }
-
-        public List<Afspraak> SelectAfspraak()
-        {
-            List<Afspraak> returnlist = new List<Afspraak>();
-
-            if (dataset.Tables["Afspraak"].Rows.Count > 0)
+            catch (Exception ex)
             {
-                foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
-                {
-                    //if((DateTime)row["startTime"] == afspraak.StartTime)
-                    //{
-
-
-                    //}
-
-                    returnlist.Add(new Afspraak((DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"]));
-
-                }
+                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message);
 
             }
             return returnlist;
@@ -294,13 +399,9 @@ namespace Calender
                 {
                     foreach (DataRow row in dataset.Tables["Kalender"].Rows)
                     {
-                        //if((DateTime)row["startTime"] == afspraak.StartTime)
-                        //{
-
-
-                        //}
-
-                        KalenderLijst.Add(new Kalender((int)row["id"],(string)row["Naam"], SelectAfspraak()));
+                        Kalender kalender = new Kalender((int)row[0], (string)row[1], (string)row[2], new List<IAfspraak>());
+                        kalender.AfsprakenLijst = SelectAfspraak(kalender);
+                        KalenderLijst.Add(kalender);
 
                     }
 
@@ -308,7 +409,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Een error heeft zich voorgedaan!");
+                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de kalenders!\n" + ex.Message);
 
             }
 
@@ -337,7 +438,7 @@ namespace Calender
 
         public void conClose()
         {
-            Con.Close();//close the connection
+            Con.Close();
         }
 
         #endregion

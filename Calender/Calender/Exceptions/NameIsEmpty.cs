@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Calender.Exceptions
 {
@@ -16,7 +17,7 @@ namespace Calender.Exceptions
         public NameIsEmpty(string name)
             : base(String.Format("name was empty for: {0}", name))
         {
-
+            MessageBox.Show($"Naam was leeg voor: {name}");
         }
 
     }
