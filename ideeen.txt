@@ -1,12 +1,12 @@
 Error bij selecteren van datumrange, niet alle dingen worden getoond
 Geselecteerde datumrange van plaats veranderen --> boven kalender
 U hebt de kalender geselecteerd --> databinding
-Minimize to tray - actief blijven - automatisch opstarten
-notificaties 1 uur voor events - kiezen van hoe lang bij afspraak maken
-installer maken
+Minimize to tray - actief blijven - automatisch opstarten - Thomas
+notificaties 1 uur voor events - kiezen van hoe lang bij afspraak maken - Thomas
+installer maken - Thomas
 startuur en einduur met dropdown die werkt
 status (vrij/bezet, notificatie of je wilt toevoegen) 
-kopieren van afspraak
+kopieren van afspraak - Tijs
 herhalende afspraken
 
 
