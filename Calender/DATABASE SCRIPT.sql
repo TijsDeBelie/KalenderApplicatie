@@ -1,21 +1,21 @@
-if exists(select name from sys.databases where name = 'AD3_Kalender_TijsDeBelie')
+if exists(select name from sys.databases where name = 'AD3_Kalender_teamversie')
 BEGIN
 	USE master
 	PRINT 'Bestaande databank wordt verwijderd...'
-	ALTER DATABASE AD3_Kalender_TijsDeBelie
+	ALTER DATABASE AD3_Kalender_teamversie
 		SET SINGLE_USER
 		WITH ROLLBACK IMMEDIATE;
 	WAITFOR DELAY '00:00:05'
-	DROP DATABASE AD3_Kalender_TijsDeBelie
+	DROP DATABASE AD3_Kalender_teamversie
 	PRINT 'Bestaande databank is verwijderd.'
 END
 GO
 
-CREATE DATABASE AD3_Kalender_TijsDeBelie
+CREATE DATABASE AD3_Kalender_teamversie
 PRINT 'Databank werd gemaakt'
 GO
 
-USE AD3_Kalender_TijsDeBelie
+USE AD3_Kalender_teamversie
 
 
 CREATE TABLE tblKalender(
