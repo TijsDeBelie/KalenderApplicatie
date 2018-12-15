@@ -139,8 +139,9 @@
                             <ComboBox x:Name="CBkalender3" Width="300" SelectedIndex="0" ItemsSource="{Binding Naam}"></ComboBox>
                         </WrapPanel>
                             <WrapPanel Margin="0,20,0,0">
-                                <Button x:Name="BtnWijzig" Width="300" Height="Auto" Content="Wijzig" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnWijzig_Click"></Button>
-                                <Button x:Name="BtnVerwijder" Width="300" Height="Auto" Content="Verwijder" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnVerwijder_Click"></Button>
+                                <Button x:Name="BtnWijzig" Width="200" Height="Auto" Content="Wijzig" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnWijzig_Click"></Button>
+                                <Button x:Name="BtnVerwijder" Width="200" Height="Auto" Content="Verwijder" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnVerwijder_Click"></Button>
+                                <Button x:Name="BtnKopieer" Width="200" Height="Auto" Content="Kopieer" IsEnabled="{Binding ElementName=DisplayList,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}" Click="BtnKopieer_Click"></Button>
                             </WrapPanel>
                         </StackPanel>
                     </WrapPanel>

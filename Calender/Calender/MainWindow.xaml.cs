@@ -368,6 +368,13 @@ namespace Calender
             txtOnderwerp.Text = string.Empty;
             
         }
+
+        private void BtnKopieer_Click(object sender, RoutedEventArgs e)
+        {
+
+            DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text), (IKalender)CBkalender2.SelectedItem);
+            UpdateList((IKalender)CBkalender2.SelectedItem);
+        }
     }
 
     public class NullToBooleanConverter : IValueConverter

@@ -55,7 +55,7 @@ namespace Calender
         #region Methods
         public void conOpen()
         {
-            conString = @"Data Source = (localdb)\mssqllocaldb; Initial Catalog = AD3_teamversie; Integrated Security = True; Pooling = False";
+            conString = @"Data Source = (localdb)\mssqllocaldb; Initial Catalog = AD3_Kalender_teamversie; Integrated Security = True; Pooling = False";
             //Dit is wanneer je met de .mdf file wilt werken
             //conString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = 'D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\AD3_Kalender_TijsDeBelie.mdf'; Integrated Security = True; Connect Timeout = 30";
 
