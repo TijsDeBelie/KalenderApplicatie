@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Calender"
+    "\\Calender",
+    "\\Calender\\Calender"
   ],
-  "SelectedNode": "\\Calender\\DATABASE SCRIPT.sql",
+  "SelectedNode": "\\Calender\\Calender\\MainWindow.xaml",
   "PreviewInSolutionExplorer": false
 }
