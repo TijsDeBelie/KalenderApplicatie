@@ -1,61 +1,72 @@
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Calender.exe.config
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Calender.exe
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Calender.pdb
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender.csprojResolveAssemblyReference.cache
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\MainWindow.g.cs
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\App.g.cs
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender_MarkupCompile.cache
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender_MarkupCompile.lref
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\MainWindow.baml
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender.g.resources
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.Cache
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender.exe
-D:\Odisee\3TI\Application development 3\Calender\Calender\obj\Debug\Calender.pdb
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Xceed.Wpf.DataGrid.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\Xceed.Wpf.Toolkit.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\Calender\Calender\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Calender.exe.config
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.exe
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.pdb
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Calender.exe
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Calender.pdb
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Xceed.Wpf.DataGrid.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\Xceed.Wpf.Toolkit.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.csprojResolveAssemblyReference.cache
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\MainWindow.g.cs
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\App.g.cs
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender_MarkupCompile.cache
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender_MarkupCompile.lref
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\MainWindow.baml
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.g.resources
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.Cache
-D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\GeneratedInternalTypeHelper.g.cs
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\CalenderDb.mdf
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\CalenderDb_log.ldf
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Calender.exe.config
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Calender.exe
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Calender.pdb
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.DataGrid.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.Toolkit.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csprojAssemblyReference.cache
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\MainWindow.g.cs
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\App.g.cs
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender_Content.g.cs
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\GeneratedInternalTypeHelper.g.cs
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender_MarkupCompile.cache
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender_MarkupCompile.lref
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\MainWindow.baml
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.g.resources
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.cache
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csproj.CoreCompileInputs.cache
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csproj.CopyComplete
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.exe
+Z:\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.pdb
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\CalenderDb.mdf
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\CalenderDb_log.ldf
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Calender.exe.config
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Calender.exe
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Calender.pdb
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.AvalonDock.Themes.VS2010.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.DataGrid.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\Xceed.Wpf.Toolkit.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csprojAssemblyReference.cache
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\MainWindow.g.cs
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\App.g.cs
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender_Content.g.cs
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\GeneratedInternalTypeHelper.g.cs
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender_MarkupCompile.cache
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender_MarkupCompile.lref
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\MainWindow.baml
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.g.resources
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.cache
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csproj.CoreCompileInputs.cache
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.csproj.CopyComplete
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.exe
+\\10.0.2.4\qemu\cloud\odisee\ad3\teamversie\Calender\Calender\obj\Debug\Calender.pdb
