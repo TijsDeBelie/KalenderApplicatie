@@ -140,3 +140,6 @@ D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj
 D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.g.resources
 D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
 D:\Odisee\3TI\Application development 3\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.Cache
+C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\Calender.exe.config
+C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.exe
+C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.pdb
