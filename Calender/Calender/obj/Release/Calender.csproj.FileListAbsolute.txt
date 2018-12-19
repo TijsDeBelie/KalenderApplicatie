@@ -31,3 +31,4 @@ C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Release\
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Release\Calender.csproj.GenerateResource.Cache
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Release\Calender.exe
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Release\Calender.pdb
+C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Release\Calender.csprojResolveAssemblyReference.cache
