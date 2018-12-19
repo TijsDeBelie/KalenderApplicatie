@@ -7,3 +7,21 @@
 Calender/Calender/bin/Debug/Calender\.exe
 
 Calender/Calender/bin/Debug/Calender\.pdb
+
+# Ignore all directories, and all sub-directories, and it's contents:
+*/*
+
+#Now ignore all files in the current directory 
+*.*
+
+
+#Don't ignore these files
+!Calender/Calender/Classes/
+!Calender/Calender/Exceptions/
+!Calender/Calender/MainWindow.xaml.cs
+!Calender/Calender/MainWindow.xaml
+!Calender/CalenderApp_Tijs_Thomas/
+
+
+
+
