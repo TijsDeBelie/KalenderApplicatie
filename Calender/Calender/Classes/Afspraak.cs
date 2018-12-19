@@ -26,6 +26,7 @@ namespace Calender
         private string _subject;
         private string _beschrijving;
         private int _id;
+        private Boolean _status;
 
         public int Id
         {
