@@ -26,7 +26,16 @@ namespace Calender
         private string _subject;
         private string _beschrijving;
         private int _id;
-        private Boolean _status;
+        private bool _status;
+
+     
+
+        public bool Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
+
 
         public int Id
         {
