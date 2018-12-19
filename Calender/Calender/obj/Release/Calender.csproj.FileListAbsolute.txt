@@ -67,3 +67,4 @@ C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\obj\R
 C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\obj\Release\Calender.csproj.CopyComplete
 C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\obj\Release\Calender.exe
 C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\obj\Release\Calender.pdb
+C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Release\Calender.csprojResolveAssemblyReference.cache
