@@ -187,6 +187,10 @@
                             <Label Width="100">Kalender</Label>
                             <ComboBox x:Name="CBkalender" Width="300" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender_SelectionChanged"></ComboBox>
                         </WrapPanel>
+                        <WrapPanel>
+                            <Label Width="100">Herhaling</Label>
+                            <ComboBox Width="300"></ComboBox>
+                        </WrapPanel>
                         <Button Content="Voeg toe" Margin="0,0,26.2,0" Click="BtnNieuweAfspraak_Click" IsEnabled="{Binding ElementName=CBkalender,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"/>
                     </StackPanel>
                 </GroupBox>
