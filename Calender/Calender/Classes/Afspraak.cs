@@ -11,8 +11,8 @@ namespace Calender
 {
     public class Afspraak : IAfspraak
     {
-        public Afspraak(int id,DateTime startTime, DateTime endTime, string subject, string beschrijving) : this(id, startTime, endTime, subject, beschrijving, null){}
-        public Afspraak(int id, DateTime startTime, DateTime endTime, string subject, string beschrijving, Locatie locatie)
+        public Afspraak(int id, DateTime startTime, DateTime endTime, string subject, string beschrijving, Boolean bezet) : this(id, startTime, endTime, subject, beschrijving, null, bezet) { }
+        public Afspraak(int id, DateTime startTime, DateTime endTime, string subject, string beschrijving, Locatie locatie, Boolean bezet)
         {
             Id = id;
             StartTime = startTime;
@@ -20,22 +20,14 @@ namespace Calender
             Subject = subject;
             Beschrijving = beschrijving;
             Locatie = locatie;
+            Bezet = bezet;
         }
         private DateTime _startTime;
         private DateTime _endTime;
         private string _subject;
         private string _beschrijving;
         private int _id;
-        private bool _status;
-
-     
-
-        public bool Status
-        {
-            get { return _status; }
-            set { _status = value; }
-        }
-
+        private Boolean _bezet;
 
         public int Id
         {
@@ -48,7 +40,8 @@ namespace Calender
                 if (value >= 0)
                 {
                     _id = value;
-                }else
+                }
+                else
                 {
 
                     throw new NameIsEmpty("Afspraak ID");
@@ -58,7 +51,8 @@ namespace Calender
         }
 
 
-        public DateTime StartTime {
+        public DateTime StartTime
+        {
             get
             {
                 return _startTime;
@@ -68,15 +62,17 @@ namespace Calender
                 if (value != DateTime.MinValue)
                 {
                     _startTime = value;
-                }else
+                }
+                else
                 {
                     throw new NameIsEmpty("Afspraak StartTijd");
 
                 }
-                
+
             }
         }
-        public DateTime EndTime {
+        public DateTime EndTime
+        {
             get
             {
                 return _endTime;
@@ -86,15 +82,17 @@ namespace Calender
                 if (value != DateTime.MinValue)
                 {
                     _endTime = value;
-                }else
+                }
+                else
                 {
                     throw new NameIsEmpty("Afspraak EindTijd");
 
                 }
-                
+
             }
         }
-        public string Subject {
+        public string Subject
+        {
             get
             {
                 return _subject;
@@ -131,6 +129,18 @@ namespace Calender
 
                 }
 
+            }
+        }
+
+        public Boolean Bezet
+        {
+            get
+            {
+                return _bezet;
+            }
+            set
+            {
+                _bezet = value;
             }
         }
 

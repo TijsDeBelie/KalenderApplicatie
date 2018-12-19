@@ -10,7 +10,7 @@ namespace Calender
         Locatie Locatie { get; set; }
         DateTime StartTime { get; set; }
         string Subject { get; set; }
-
+        Boolean Bezet { get; set; }
         string ToString();
     }
 }

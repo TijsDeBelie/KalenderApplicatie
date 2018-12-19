@@ -318,14 +318,6 @@ namespace Calender {
         #line default
         #line hidden
         
-        
-        #line 192 "..\..\MainWindow.xaml"
-        [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        internal System.Windows.Controls.ComboBox CBherhalen;
-        
-        #line default
-        #line hidden
-        
         private bool _contentLoaded;
         
         /// <summary>
@@ -528,9 +520,6 @@ namespace Calender {
             #line hidden
             return;
             case 34:
-            this.CBherhalen = ((System.Windows.Controls.ComboBox)(target));
-            return;
-            case 35:
             
             #line 194 "..\..\MainWindow.xaml"
             ((System.Windows.Controls.Button)(target)).Click += new System.Windows.RoutedEventHandler(this.BtnNieuweAfspraak_Click);

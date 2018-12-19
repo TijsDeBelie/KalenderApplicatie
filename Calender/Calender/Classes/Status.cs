@@ -13,7 +13,6 @@ namespace Calender
             ListOfItems = new List<string>();
             ListOfItems.Add("Vrij");
             ListOfItems.Add("Bezet");
-            ListOfItems.Add("Werk");
         }
 
         public IList<string> ListOfItems { get; set; }
