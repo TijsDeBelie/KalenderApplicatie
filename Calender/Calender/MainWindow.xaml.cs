@@ -38,13 +38,24 @@ namespace Calender
         /// <param name="onderwerp">De titel van de afspraak</param>
         /// <param name="beschrijving">De beschrijving van de afspraak</param>
         /// <param name="kalender">De kalender waar de afspraak bij hoort</param>
-        private void AddEvent(string onderwerp, string beschrijving, IKalender kalender)
+        private void AddEvent(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
         {
             try
             {
                 
                 if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
-                Afspraak nieuweAfspraak = new Afspraak(0, Convert.ToDateTime(dtpStart.Value), Convert.ToDateTime(dtpEnd.Value), onderwerp, beschrijving);
+                List<IAfspraak> afspraken = DB.SelectAfspraak();
+                foreach(var afspraak in afspraken)
+                {
+                    if(afspraak.Bezet == true)
+                    {
+                        if(Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
+                        {
+                            MessageBox.Show("er is overlapping");
+                        }
+                    }
+                }
+                Afspraak nieuweAfspraak = new Afspraak(0, Convert.ToDateTime(dtpStart.Value), Convert.ToDateTime(dtpEnd.Value), onderwerp, beschrijving, bezet);
 
                 kalender.AfsprakenLijst.Add(nieuweAfspraak);
                 
@@ -109,7 +120,11 @@ namespace Calender
         /// <param name="e"></param>
         private void BtnNieuweAfspraak_Click(object sender, RoutedEventArgs e)
         {
-            AddEvent(txtOnderwerp.Text, txtBeschrijving.Text, (IKalender)CBkalender.SelectedValue);
+            bool bezet = false;
+            if (CBstatus.SelectedValue.Equals("Bezet"))
+                bezet = true;
+
+            AddEvent(txtOnderwerp.Text, txtBeschrijving.Text, (IKalender)CBkalender.SelectedValue, bezet);
 
         }
         /// <summary>
@@ -372,7 +387,7 @@ namespace Calender
         private void BtnKopieer_Click(object sender, RoutedEventArgs e)
         {
 
-            DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text), (IKalender)CBkalender2.SelectedItem);
+            DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (bool)CBstatus.SelectedItem), (IKalender)CBkalender2.SelectedItem);
             UpdateList((IKalender)CBkalender2.SelectedItem);
         }
     }

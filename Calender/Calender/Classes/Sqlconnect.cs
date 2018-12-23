@@ -209,7 +209,7 @@ namespace Calender
             row["subject"] = (string)afspraak.Subject ?? "Lege naam";
             row["beschrijving"] = (string)afspraak.Beschrijving ?? "Lege beschrijving";
             row["KalenderID"] = (int)kalender.Id;
-
+            row["Bezet"] = (bool)afspraak.Bezet;
 
             dataset.Tables["Afspraak"].Rows.Add(row);
 
@@ -353,7 +353,7 @@ namespace Calender
                     {
                         if ((int)row[5] == kalender.Id) //ROW 5 IS NULL
                         {
-                            returnlist.Add(new Afspraak((int)row["Id"], (DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"]));
+                            returnlist.Add(new Afspraak((int)row["Id"], (DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["subject"], (string)row["beschrijving"],(bool)row["Bezet"]));
 
                         }
 
@@ -378,7 +378,7 @@ namespace Calender
                 {
                     foreach (DataRow row in dataset.Tables["Afspraak"].Rows)
                     {
-                        returnlist.Add(new Afspraak((int)row["Id"], (DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["Subject"], (string)row["Beschrijving"]));
+                        returnlist.Add(new Afspraak((int)row["Id"], (DateTime)row["startTime"], (DateTime)row["endTime"], (string)row["Subject"], (string)row["Beschrijving"],(bool)row["Bezet"]));
                     }
                 }
             }
