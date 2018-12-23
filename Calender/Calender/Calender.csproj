@@ -94,6 +94,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Herhaling.cs" />
     <Compile Include="Classes\IAfspraak.cs" />
     <Compile Include="Classes\IKalender.cs" />
     <Compile Include="Classes\Locatie.cs" />

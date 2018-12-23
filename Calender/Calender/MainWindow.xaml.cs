@@ -24,7 +24,13 @@ namespace Calender
         {
             InitializeComponent();
             //status is momenteel niet gebruikt en wordt ook niet opgelsagen in de database, dit is iets voor een uitbreiding
-            DataContext = new Status();
+    
+            DataContext = new
+            {
+                status = new Status(),
+                herhaling = new Herhaling(),
+            };
+
             KalenderLijst = DB.SelectKalender();
             Cmonth.SelectedDate = DateTime.Today;
             CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = CBkalender3.ItemsSource = KalenderLijst;
