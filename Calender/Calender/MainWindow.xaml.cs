@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -20,15 +21,17 @@ namespace Calender
     {
         ObservableCollection<IKalender> KalenderLijst = new ObservableCollection<IKalender>();
         Sqlconnect DB = new Sqlconnect();
+
+
         public MainWindow()
         {
             InitializeComponent();
             //status is momenteel niet gebruikt en wordt ook niet opgelsagen in de database, dit is iets voor een uitbreiding
-    
+
             DataContext = new
             {
                 status = new Status(),
-                herhaling = new Herhaling(),
+                herhaling = new Herhaling()
             };
 
             KalenderLijst = DB.SelectKalender();
@@ -46,30 +49,75 @@ namespace Calender
         /// <param name="kalender">De kalender waar de afspraak bij hoort</param>
         private void AddEvent(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
         {
-            try
+
+            if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
+            List<IAfspraak> afspraken = DB.SelectAfspraak();
+            foreach (var afspraak in afspraken)
             {
-                
-                if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
-                List<IAfspraak> afspraken = DB.SelectAfspraak();
-                foreach(var afspraak in afspraken)
+                if (afspraak.Bezet == true)
                 {
-                    if(afspraak.Bezet == true)
+                    if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
                     {
-                        if(Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
+                        MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
+                        if (dialogResult == MessageBoxResult.Yes)
                         {
-                            MessageBox.Show("er is overlapping");
+                            voegToe(onderwerp, beschrijving, kalender, bezet);
+                        }
+                        else if (dialogResult == MessageBoxResult.No)
+                        {
+                            break;
                         }
                     }
                 }
+            }
+
+
+        }
+        private void voegToe(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
+        {
+            try
+            {
                 Afspraak nieuweAfspraak = new Afspraak(0, Convert.ToDateTime(dtpStart.Value), Convert.ToDateTime(dtpEnd.Value), onderwerp, beschrijving, bezet);
 
                 kalender.AfsprakenLijst.Add(nieuweAfspraak);
-                
+
 
                 DisplayList.Items.Clear();
 
                 DB.InsertAfspraak(nieuweAfspraak, kalender);
+
+                if (CBherhaling.SelectedValue.ToString() == "Dagelijks")
+                {
+                    DateTime herhalingEindDatum = (DateTime)HerhalingDatum.SelectedDate;
+                    double totaalDagen = (herhalingEindDatum.Date - ((DateTime)dtpStart.Value).Date).TotalDays;
+                    for (int i = 1; i <= totaalDagen; i++)
+                    {
+                        Afspraak nieuweHerhalingsAfspraak = new Afspraak(0, Convert.ToDateTime(dtpStart.Value).AddDays(i), Convert.ToDateTime(dtpEnd.Value).AddDays(i), onderwerp, beschrijving, bezet);
+                        DB.InsertAfspraak(nieuweHerhalingsAfspraak, kalender);
+                    }
+                    DB.BevestigAfspraak((int)totaalDagen);
+
+                }
+                else if (CBherhaling.SelectedValue.ToString() == "Wekelijks")
+                {
+                    DateTime herhalingEindDatum = (DateTime)HerhalingDatum.SelectedDate;
+                    double totaalDagen = (herhalingEindDatum.Date - ((DateTime)dtpStart.Value).Date).TotalDays;
+                    double totaalWeken = totaalDagen / 7;
+                    for (int i = 1; i <= totaalWeken; i++)
+                    {
+                        Afspraak nieuweHerhalingsAfspraak = new Afspraak(0, Convert.ToDateTime(dtpStart.Value).AddWeeks(i), Convert.ToDateTime(dtpEnd.Value).AddWeeks(i), onderwerp, beschrijving, bezet);
+                        DB.InsertAfspraak(nieuweHerhalingsAfspraak, kalender);
+                    }
+                    DB.BevestigAfspraak((int)totaalWeken);
+                }
+
+
+
+
                 UpdateList((IKalender)CBkalender.SelectedValue);
+
+
+
                 MaakVeldenLeeg();
                 TabCalender.SelectedIndex = 1;
             }
@@ -77,7 +125,8 @@ namespace Calender
             {
                 MessageBox.Show("De afspraak is niet toegevoegd omdat er een veld leeg was!\n" + ex.Message);
 
-            }catch (StartDateIsBeforeEndDate)
+            }
+            catch (StartDateIsBeforeEndDate)
             {
                 MessageBox.Show("De startdatum is groter of gelijk aan de eindatum!");
 
@@ -316,7 +365,8 @@ namespace Calender
             catch (Exceptions.NameIsEmpty)
             {
                 MessageBox.Show("Kon de afspraak niet wijzigen omdat er een veld leeg is");
-            }catch(StartDateIsBeforeEndDate)
+            }
+            catch (StartDateIsBeforeEndDate)
             {
                 MessageBox.Show("De startdatum is groter of gelijk aan de eindatum!");
             }
@@ -387,7 +437,7 @@ namespace Calender
             txtKalenderNaam.Text = string.Empty;
             txtLocatie.Text = string.Empty;
             txtOnderwerp.Text = string.Empty;
-            
+
         }
 
         private void BtnKopieer_Click(object sender, RoutedEventArgs e)
@@ -396,6 +446,7 @@ namespace Calender
             DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (bool)CBstatus.SelectedItem), (IKalender)CBkalender2.SelectedItem);
             UpdateList((IKalender)CBkalender2.SelectedItem);
         }
+
     }
 
     public class NullToBooleanConverter : IValueConverter
@@ -408,6 +459,14 @@ namespace Calender
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public static class DateTimeExtensions
+    {
+        public static DateTime AddWeeks(this DateTime dateTime, int numberOfWeeks)
+        {
+            return dateTime.AddDays(numberOfWeeks * 7);
         }
     }
 }

@@ -191,12 +191,20 @@ namespace Calender
                 row["Beschrijving"] = kalender.Beschrijving;
                 dataset.Tables["Kalender"].Rows.Add(row);
                 adapterKalender.Update(dataset, "Kalender");
-                MessageBox.Show("Nieuwe Kalender is toegevoegd");
+               
+               
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Kon de nieuwe kalender niet invoegen\n" + ex.Message);
             }
+        }
+
+        public void BevestigAfspraak(int times)
+        {
+
+            MessageBox.Show($"Nieuwe Afspraak is {times} keer toegevoegd");
+
         }
 
         public void InsertAfspraak(Afspraak afspraak, IKalender kalender)
@@ -214,7 +222,6 @@ namespace Calender
             dataset.Tables["Afspraak"].Rows.Add(row);
 
             adapterAfspraak.Update(dataset, "Afspraak");
-            MessageBox.Show("Nieuwe Afspraak is toegevoegd");
 
         }
 
