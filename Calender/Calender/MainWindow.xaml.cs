@@ -162,7 +162,7 @@ namespace Calender
             dtpEnd.Value = Cmonth.SelectedDates.Last();
             IKalender selected = (IKalender)CBkalender1.SelectedValue;
             if (selected == null) { DayDisplayList.Items.Clear(); return; }
-            IEnumerable<IAfspraak> results = selected.AfsprakenLijst.Where(x => x.StartTime.Date >= Cmonth.SelectedDates.First().Date && x.EndTime.Date <= Cmonth.SelectedDates.Last().Date);
+            IEnumerable<IAfspraak> results = selected.AfsprakenLijst.Where(x => x.StartTime.Date >= Cmonth.SelectedDates.First().Date && x.EndTime.Date <= Cmonth.SelectedDates.Last().Date.AddDays(1));
             DayDisplayList.Items.Clear();
             foreach (Afspraak item in results)
             {
