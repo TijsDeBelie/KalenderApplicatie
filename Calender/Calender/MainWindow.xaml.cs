@@ -52,26 +52,30 @@ namespace Calender
 
             if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
             List<IAfspraak> afspraken = DB.SelectAfspraak();
-            foreach (var afspraak in afspraken)
+            if (afspraken.Count >= 1)
             {
-                if (afspraak.Bezet == true)
+
+
+
+                foreach (var afspraak in afspraken)
                 {
-                    if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
+                    if (afspraak.Bezet == true)
                     {
-                        MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
-                        if (dialogResult == MessageBoxResult.Yes)
+                        if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
                         {
-                            voegToe(onderwerp, beschrijving, kalender, bezet);
-                        }
-                        else if (dialogResult == MessageBoxResult.No)
-                        {
-                            break;
+                            MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
+                            if (dialogResult == MessageBoxResult.Yes)
+                            {
+                                voegToe(onderwerp, beschrijving, kalender, bezet);
+                            }
                         }
                     }
                 }
             }
-
-
+            else
+            {
+                voegToe(onderwerp, beschrijving, kalender, bezet);
+            }
         }
         private void voegToe(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
         {

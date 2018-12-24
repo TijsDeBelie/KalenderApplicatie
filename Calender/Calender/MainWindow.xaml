@@ -16,22 +16,18 @@
         <SolidColorBrush x:Key="BG" Color="Gray"/>
     </Window.Resources>
     <Grid x:Name="grid_main">
-        
+
         <TabControl x:Name="TabCalender" Height="Auto" Width="Auto" Background="{DynamicResource BG}">
             <TabItem Header="Overzicht kalenders en afspraken" Height="45">
                 <DockPanel x:Name="KalenderView" LastChildFill="false" Height="Auto" Width="Auto">
-
-
-                    <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center">
-
+                    <GroupBox Header="Kalender" DockPanel.Dock="Right" Width="379" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="700" MinHeight="700">
                         <Calendar  x:Name="Cmonth"
                                 SelectionMode="SingleRange" 
                                 FirstDayOfWeek="Monday"  
                                 IsTodayHighlighted="True"
-                                Margin="0,95.2,200,170.6"
+                                Margin="252,240,257,0"
                                 RenderTransformOrigin="0.5,0.5"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
+                                VerticalAlignment="Top"
                                 SelectedDatesChanged="Cmonth_SelectedDatesChanged"
                                 MouseRightButtonDown="Cmonth_MouseRightButtonDown">
                             <Calendar.RenderTransform>
@@ -39,16 +35,14 @@
                                     <ScaleTransform ScaleX="3" ScaleY="3"/>
                                     <SkewTransform/>
                                     <RotateTransform/>
-                                    <TranslateTransform/>
+                                    <TranslateTransform X="2" Y="2"/>
                                 </TransformGroup>
                             </Calendar.RenderTransform>
+
                         </Calendar>
-                    </StackPanel>
-                    <GroupBox VerticalAlignment="Bottom" HorizontalAlignment="Center" DockPanel.Dock="Bottom">
-                        <TextBlock x:Name="Txtinfo" ></TextBlock>
                     </GroupBox>
-                    <GroupBox Header="Kalender Beheer">
-                        <StackPanel DockPanel.Dock="Left" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" ToolTip="Voeg een nieuwe kalender toe, selecteer de gewenste kalender, of verwijder de geselecteerde">
+                    <GroupBox Header="Kalender Beheer" DockPanel.Dock="Left">
+                        <StackPanel Margin="0" ToolTip="Voeg een nieuwe kalender toe, selecteer de gewenste kalender, of verwijder de geselecteerde">
                             <TextBlock Height="auto" TextWrapping="Wrap">
                             <Run Text="Voeg een nieuwe kalender toe,"/>
                              <LineBreak/>
@@ -77,12 +71,13 @@
 
                         </StackPanel>
                     </GroupBox>
-                    <StackPanel Width="Auto" DockPanel.Dock="Top" VerticalAlignment="Center">
-                        <Label  Width="200">Geselecteerde datumrange</Label>
-                        <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=Width, ElementName=DayDisplayList}" IsEnabled="False"/>
-                        <ListBox x:Name="DayDisplayList" Height="500" Width="500" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="120,0"/>
-                    </StackPanel>
-
+                    <GroupBox Header="Alle afspraken" DockPanel.Dock="Top">
+                        <StackPanel Width="Auto" DockPanel.Dock="Top" Height="Auto">
+                            <Label  Width="200">Geselecteerde datumrange</Label>
+                            <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=Width, ElementName=DayDisplayList}" IsEnabled="False"/>
+                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="120,0"/>
+                        </StackPanel>
+                    </GroupBox>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Afspraken per kalender">
@@ -158,7 +153,7 @@
                         <TextBlock x:Name="Txtinfo2" ></TextBlock>
                     </GroupBox>
                 </Grid>
-                
+
             </TabItem>
             <TabItem Header="Nieuwe afspraak">
                 <GroupBox Header="Nieuwe Afspraak" Margin="5,0,456.4,0">
