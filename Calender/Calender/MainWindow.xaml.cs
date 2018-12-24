@@ -49,32 +49,40 @@ namespace Calender
         /// <param name="kalender">De kalender waar de afspraak bij hoort</param>
         private void AddEvent(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
         {
-
-            if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
-            List<IAfspraak> afspraken = DB.SelectAfspraak();
-            if (afspraken.Count >= 1)
+            try
             {
 
-
-
-                foreach (var afspraak in afspraken)
+                if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
+                List<IAfspraak> afspraken = DB.SelectAfspraak();
+                if (afspraken.Count >= 1)
                 {
-                    if (afspraak.Bezet == true)
+
+
+
+                    foreach (var afspraak in afspraken)
                     {
-                        if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
+                        if (afspraak.Bezet == true)
                         {
-                            MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
-                            if (dialogResult == MessageBoxResult.Yes)
+                            if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
                             {
-                                voegToe(onderwerp, beschrijving, kalender, bezet);
+                                MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
+                                if (dialogResult == MessageBoxResult.Yes)
+                                {
+                                    voegToe(onderwerp, beschrijving, kalender, bezet);
+                                }
                             }
                         }
                     }
                 }
+                else
+                {
+                    voegToe(onderwerp, beschrijving, kalender, bezet);
+                }
             }
-            else
+            catch (StartDateIsBeforeEndDate)
             {
-                voegToe(onderwerp, beschrijving, kalender, bezet);
+                MessageBox.Show("De startdatum is groter of gelijk aan de eindatum!");
+
             }
         }
         private void voegToe(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
@@ -155,7 +163,6 @@ namespace Calender
             IKalender selected = (IKalender)CBkalender1.SelectedValue;
             if (selected == null) { DayDisplayList.Items.Clear(); return; }
             IEnumerable<IAfspraak> results = selected.AfsprakenLijst.Where(x => x.StartTime.Date >= Cmonth.SelectedDates.First().Date && x.EndTime.Date <= Cmonth.SelectedDates.Last().Date);
-
             DayDisplayList.Items.Clear();
             foreach (Afspraak item in results)
             {

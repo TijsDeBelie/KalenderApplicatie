@@ -14,13 +14,26 @@
     <Window.Resources>
         <local:NullToBooleanConverter x:Key="NullToBooleanConverter"></local:NullToBooleanConverter>
         <SolidColorBrush x:Key="BG" Color="Gray"/>
+        <SolidColorBrush x:Key="BG1" Color="LightGray"/>
+        <SolidColorBrush x:Key="BG2" Color="MediumBlue"/>
+        <Style TargetType="GroupBox">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}" FontWeight="Bold" FontSize="20" Margin="50,25,0,0"/>
+                        
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid x:Name="grid_main">
 
-        <TabControl x:Name="TabCalender" Height="Auto" Width="Auto" Background="{DynamicResource BG}">
+        <TabControl x:Name="TabCalender" Height="Auto" Width="Auto" Background="{DynamicResource BG}" BorderThickness="0,0,0,0">
             <TabItem Header="Overzicht kalenders en afspraken" Height="45">
                 <DockPanel x:Name="KalenderView" LastChildFill="false" Height="Auto" Width="Auto">
-                    <GroupBox Header="Kalender" DockPanel.Dock="Right" Width="379" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="700" MinHeight="700">
+                    <GroupBox Header="{Binding ElementName=CBkalender1, Path=SelectedValue}" DockPanel.Dock="Right" Width="379" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="700" MinHeight="700" BorderThickness="0,0,0,0" ClipToBounds="True">
                         <Calendar  x:Name="Cmonth"
                                 SelectionMode="SingleRange" 
                                 FirstDayOfWeek="Monday"  
@@ -41,9 +54,9 @@
 
                         </Calendar>
                     </GroupBox>
-                    <GroupBox Header="Kalender Beheer" DockPanel.Dock="Left">
+                    <GroupBox Header="Kalender Beheer" DockPanel.Dock="Left" BorderThickness="0,0,0,0" Background="{DynamicResource BG1}">
                         <StackPanel Margin="0" ToolTip="Voeg een nieuwe kalender toe, selecteer de gewenste kalender, of verwijder de geselecteerde">
-                            <TextBlock Height="auto" TextWrapping="Wrap">
+                            <TextBlock Height="auto" TextWrapping="Wrap" Margin="0,50,0,0">
                             <Run Text="Voeg een nieuwe kalender toe,"/>
                              <LineBreak/>
                             <Run Text="verander de getoonde kalender"/>
@@ -71,11 +84,11 @@
 
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Header="Alle afspraken" DockPanel.Dock="Top">
+                    <GroupBox Header="Alle afspraken" DockPanel.Dock="Top" BorderThickness="0,0,0,0">
                         <StackPanel Width="Auto" DockPanel.Dock="Top" Height="Auto">
                             <Label  Width="200">Geselecteerde datumrange</Label>
-                            <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=Width, ElementName=DayDisplayList}" IsEnabled="False"/>
-                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" HorizontalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="120,0"/>
+                            <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=ActualWidth, ElementName=DayDisplayList}" IsEnabled="False" Background="#FFD4C8C8"/>
+                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="196,0,195,0" ClipToBounds="True"/>
                         </StackPanel>
                     </GroupBox>
                 </DockPanel>
@@ -157,7 +170,7 @@
             </TabItem>
             <TabItem Header="Nieuwe afspraak">
                 <GroupBox Header="Nieuwe Afspraak" Margin="5,0,456.4,0">
-                    <StackPanel Margin="0,0,-31,0">
+                    <StackPanel Margin="0,50,-31,0">
                         <WrapPanel>
                             <Label Width="100">Onderwerp</Label>
                             <TextBox x:Name="txtOnderwerp" Width="300"></TextBox>
@@ -205,7 +218,7 @@
 
                         </WrapPanel>
 
-                        <Button Content="Voeg toe" Margin="0,0,26.2,0" Click="BtnNieuweAfspraak_Click" IsEnabled="{Binding ElementName=CBkalender,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"/>
+                        <Button Content="Voeg toe" Margin="0,25,0,0" Click="BtnNieuweAfspraak_Click" IsEnabled="{Binding ElementName=CBkalender,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"/>
                     </StackPanel>
                 </GroupBox>
             </TabItem>
