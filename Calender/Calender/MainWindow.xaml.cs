@@ -69,8 +69,14 @@ namespace Calender
                                 if (dialogResult == MessageBoxResult.Yes)
                                 {
                                     voegToe(onderwerp, beschrijving, kalender, bezet);
+                                    break;
                                 }
                             }
+                        }
+                        else
+                        {
+                            voegToe(onderwerp, beschrijving, kalender, bezet);
+                            break;
                         }
                     }
                 }
