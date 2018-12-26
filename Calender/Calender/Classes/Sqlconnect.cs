@@ -243,6 +243,31 @@ namespace Calender
             }
         }
 
+        public void DeleteAfspraak(IKalender kalender)
+        {
+            try
+            {
+
+                foreach (DataRow rowAfspraak in dataset.Tables["Afspraak"].Rows)
+                {
+                    if ((int)rowAfspraak[5] == kalender.Id)
+                    {
+                        rowAfspraak.Delete();
+
+                    }
+
+
+                }
+
+                adapterAfspraak.Update(dataset, "Afspraak");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Kon afspraak niet verwijderen\n" + ex.Message);
+
+            }
+        }
+
         public void DeleteKalender(IKalender kalender)
         {
             try

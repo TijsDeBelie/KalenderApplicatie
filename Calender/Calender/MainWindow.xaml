@@ -88,6 +88,8 @@
                                 </ComboBox>
                             </StackPanel>
                             <Button x:Name="BtnVerwijderKalender" Margin="2" Width="Auto" Height="Auto" Content="Verwijder geselecteerde kalender" Click="BtnVerwijderKalender_Click" IsEnabled="{Binding ElementName=CBkalender1,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"></Button>
+
+                            <Button x:Name="BtnLeegKalender" Margin="2" Width="Auto" Height="Auto" Content="Maak geselecteerde kalender leeg" Click="BtnLeegKalender_Click"  IsEnabled="{Binding ElementName=CBkalender1,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"></Button>
                             <WrapPanel Margin="0,50,0,0">
                                 <Label>Spraakondersteuning :</Label>
                                 <CheckBox x:Name="ChkSpraak" VerticalAlignment="Center"/>
@@ -260,7 +262,7 @@
                         </GroupBox>
                     </WrapPanel>
 
-                    <Image x:Name="Image" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="100" MinWidth="50" MinHeight="50"/>
+                    <Image x:Name="Image" Height="200" HorizontalAlignment="Center" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="200" MinWidth="50" MinHeight="50"/>
                 </WrapPanel>
 
             </TabItem>

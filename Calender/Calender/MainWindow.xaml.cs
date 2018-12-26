@@ -314,12 +314,13 @@ namespace Calender
         /// <param name="e"></param>
         private void CBkalender1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DayDisplayList.Items.Clear();
             UpdateList((IKalender)CBkalender2.SelectedValue);
             CBkalender.SelectedIndex = CBkalender1.SelectedIndex;
             CBkalender2.SelectedIndex = CBkalender1.SelectedIndex;
 
 
-            DayDisplayList.Items.Clear();
+            
         }
         /// <summary>
         /// Zorgt voor een synchronisatie van de comboboxen, als je op de eerste tab een kalender slecteerd ga je die ook zien in de andere tabs
@@ -564,6 +565,7 @@ namespace Calender
                 }
                 ImpExplist.Items.Clear();
                 sr.Close();
+                UpdateList((IKalender)importcalender.SelectedValue);
             }
             catch (Exception ex)
             {
@@ -586,6 +588,7 @@ namespace Calender
             {
                 MessageBox.Show(ex.Message);
             }
+            
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
@@ -616,6 +619,12 @@ namespace Calender
                 DeleteObject(handle);
                 return null;
             }
+        }
+
+        private void BtnLeegKalender_Click(object sender, RoutedEventArgs e)
+        {
+            DB.DeleteAfspraak((IKalender)CBkalender1.SelectedValue);
+            UpdateList((IKalender)CBkalender1.SelectedValue);
         }
     }
 
