@@ -208,3 +208,4 @@ C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Ca
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.csproj.GenerateResource.Cache
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\download.png
+C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\Resources\tray.ico
