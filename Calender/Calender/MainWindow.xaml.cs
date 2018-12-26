@@ -58,7 +58,7 @@ namespace Calender
                 {
 
 
-
+                    //Bij een lijst van afspraken met meerdere items gaat De afspraak meerdere keren worden ingevoerd, dit is denk ik niet de bedoeling 
                     foreach (var afspraak in afspraken)
                     {
                         if (afspraak.Bezet == true)
@@ -208,10 +208,11 @@ namespace Calender
         {
             try
             {
+
                 Kalender nieuweKalender = new Kalender(0, txtKalenderNaam.Text, txtKalenderBeschrijving.Text, new List<IAfspraak>());
                 DB.InsertKalender(nieuweKalender);
                 UpdateKalenderLijst();
-
+                MaakVeldenLeeg();
             }
             catch (Exception)
             {
@@ -454,16 +455,32 @@ namespace Calender
             txtKalenderNaam.Text = string.Empty;
             txtLocatie.Text = string.Empty;
             txtOnderwerp.Text = string.Empty;
-
         }
 
         private void BtnKopieer_Click(object sender, RoutedEventArgs e)
         {
 
-            DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (bool)CBstatus.SelectedItem), (IKalender)CBkalender2.SelectedItem);
+            DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (CBstatus2.SelectedValue.ToString() == "Vrij" ? true : false)), (IKalender)CBkalender2.SelectedItem);
             UpdateList((IKalender)CBkalender2.SelectedItem);
         }
 
+        private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+            List<IAfspraak> results = DB.SelectAfspraak((IKalender)CBkalender2.SelectedItem);
+            List<IAfspraak> filtered = results.Where(s => s.Subject.ToLower().Contains(TxtFilter.Text.ToLower()) ||s.Beschrijving.ToLower().Contains(TxtFilter.Text.ToLower())).ToList();
+            DisplayList.Items.Clear();
+            if(filtered.Count == 0)
+            {
+                DisplayList.Items.Add("Geen items gevonden");
+
+            }
+            foreach (IAfspraak item in filtered)
+            {
+                DisplayList.Items.Add(item);
+            }
+            
+        }
     }
 
     public class NullToBooleanConverter : IValueConverter

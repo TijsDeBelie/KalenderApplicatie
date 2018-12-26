@@ -27,6 +27,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="FontSize" Value="13"></Setter>
+        </Style>
     </Window.Resources>
     <Grid x:Name="grid_main">
 
@@ -88,7 +92,13 @@
                         <StackPanel Width="Auto" DockPanel.Dock="Top" Height="Auto">
                             <Label  Width="200">Geselecteerde datumrange</Label>
                             <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=ActualWidth, ElementName=DayDisplayList}" IsEnabled="False" Background="#FFD4C8C8"/>
-                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="196,0,195,0" ClipToBounds="True"/>
+                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="196,0,195,0" ClipToBounds="True">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListBoxItem}">
+                                        <Setter Property="Focusable" Value="False"/>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
                         </StackPanel>
                     </GroupBox>
                 </DockPanel>
@@ -104,7 +114,9 @@
                         <WrapPanel Width="{Binding ElementName=grid_Main,Path=ActualWidth}"
 >
                             <Label Width="150">Kalenderselectie :</Label>
-                            <ComboBox x:Name="CBkalender2" Width="400" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender2_SelectionChanged"></ComboBox>
+                            <ComboBox x:Name="CBkalender2" Width="400"  SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender2_SelectionChanged"></ComboBox>
+                            <Label Width="100"  Margin="50,0,0,0" HorizontalAlignment="Right">Zoek :</Label>
+                            <TextBox x:Name="TxtFilter" Width="200" Margin="0,0,0,0" HorizontalAlignment="Right" TextChanged="TxtFilter_TextChanged"></TextBox>
                         </WrapPanel>
                         <ListView x:Name="DisplayList" ScrollViewer.VerticalScrollBarVisibility="Visible" MaxHeight="400" SelectionChanged="DisplayList_SelectionChanged"/>
 
@@ -152,6 +164,10 @@
                                 <xctk:DateTimePicker Name="txtAfspraakEind" Width="300" ShowDropDownButton="False"></xctk:DateTimePicker>
                             </WrapPanel>
                             <WrapPanel Margin="5">
+                                <Label Width="150">Beschikbaarheid</Label>
+                                <ComboBox x:Name="CBstatus2" Width="300" SelectedIndex="0" ItemsSource="{Binding status.ListOfItems}"></ComboBox>
+                            </WrapPanel>
+                            <WrapPanel Margin="5">
                                 <Label Width="150">Verander Kalender</Label>
                                 <ComboBox x:Name="CBkalender3" Width="300" SelectedIndex="0" ItemsSource="{Binding Naam}"></ComboBox>
                             </WrapPanel>
@@ -173,46 +189,46 @@
                     <GroupBox Header="Nieuwe Afspraak" Margin="5,0,456.4,0">
                         <StackPanel Margin="0,50,-31,0">
                             <WrapPanel>
-                                <Label Width="100">Onderwerp</Label>
+                                <Label Width="150">Onderwerp</Label>
                                 <TextBox x:Name="txtOnderwerp" Width="300"></TextBox>
 
                             </WrapPanel>
                             <WrapPanel>
-                                <Label Width="100">Beschrijving</Label>
+                                <Label Width="150">Beschrijving</Label>
                                 <TextBox x:Name="txtBeschrijving" Width="300" Height="50" AcceptsReturn="True"></TextBox>
                             </WrapPanel>
                             <WrapPanel>
-                                <Label Width="100">Locatie</Label>
+                                <Label Width="150">Locatie</Label>
                                 <TextBox x:Name="txtLocatie" Width="300">
                                 </TextBox>
                             </WrapPanel>
                             <WrapPanel>
-                                <Label Width="100">Start uur</Label>
+                                <Label Width="150">Start uur</Label>
 
-                                <xctk:DateTimePicker x:Name="dtpStart" Width="300" Format="FullDateTime" DisplayDefaultValueOnEmptyText="False" ShowDropDownButton="True"  AllowSpin="False" AllowDrop="False">
+                                <xctk:DateTimePicker x:Name="dtpStart" Width="300" Format="FullDateTime" DisplayDefaultValueOnEmptyText="False" ShowDropDownButton="True">
 
                                 </xctk:DateTimePicker>
 
                             </WrapPanel>
                             <WrapPanel>
-                                <Label Width="100">Eind uur</Label>
+                                <Label Width="150">Eind uur</Label>
                                 <xctk:DateTimePicker x:Name="dtpEnd" Width="300" Format="FullDateTime" DisplayDefaultValueOnEmptyText="False" ShowDropDownButton="True">
 
                                 </xctk:DateTimePicker>
                             </WrapPanel>
                             <WrapPanel>
-                                <Label Width="100">Beschikbaarheid</Label>
+                                <Label Width="150">Beschikbaarheid</Label>
                                 <ComboBox x:Name="CBstatus" Width="300" ItemsSource="{Binding status.ListOfItems}" SelectedIndex="0">
                                 </ComboBox>
                             </WrapPanel>
                             <WrapPanel>
-                                <Label Width="100">Kalender</Label>
+                                <Label Width="150">Kalender</Label>
                                 <ComboBox x:Name="CBkalender" Width="300" SelectedIndex="0"  ItemsSource="{Binding Naam}" DisplayMemberPath="Naam" SelectionChanged="CBkalender_SelectionChanged"></ComboBox>
                             </WrapPanel>
                             <WrapPanel Margin="0,10,0,0">
-                                <Label Width="100">Herhaling</Label>
+                                <Label Width="150">Herhaling</Label>
                                 <ComboBox x:Name="CBherhaling" ItemsSource="{Binding herhaling.Herhalingen}" Width="300" SelectedIndex="0"></ComboBox>
-                                <Label Width="100">Eindatum</Label>
+                                <Label Width="150">Eindatum</Label>
                                 <DatePicker x:Name="HerhalingDatum" Text="xwcxcwcx" ToolTip="Selecteer een datum" SelectedDate="{Binding ElementName=dtpStart, Mode=OneWay, Path=Value}">
 
                                 </DatePicker>
