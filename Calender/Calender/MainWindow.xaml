@@ -92,12 +92,7 @@
                         <StackPanel Width="Auto" DockPanel.Dock="Top" Height="Auto">
                             <Label  Width="200">Geselecteerde datumrange</Label>
                             <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding Path=ActualWidth, ElementName=DayDisplayList}" IsEnabled="False" Background="#FFD4C8C8"/>
-                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="196,0,195,0" ClipToBounds="True">
-                                <ListBox.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListBoxItem}">
-                                        <Setter Property="Focusable" Value="False"/>
-                                    </Style>
-                                </ListBox.ItemContainerStyle>
+                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="Auto" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="196,0,195,0" ClipToBounds="True" SelectionChanged="DayDisplayList_SelectionChanged">
                             </ListBox>
                         </StackPanel>
                     </GroupBox>

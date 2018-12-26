@@ -2,11 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
+using System.Speech.Synthesis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,6 +21,8 @@ namespace Calender
         ObservableCollection<IKalender> KalenderLijst = new ObservableCollection<IKalender>();
         Sqlconnect DB = new Sqlconnect();
 
+        SpeechSynthesizer synthesizer = new SpeechSynthesizer();
+       
 
         public MainWindow()
         {
@@ -39,6 +40,10 @@ namespace Calender
             CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = CBkalender3.ItemsSource = KalenderLijst;
 
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
+            synthesizer.Volume = 100;
+            synthesizer.Rate = -2;
+
         }
 
         /// <summary>
@@ -480,6 +485,13 @@ namespace Calender
                 DisplayList.Items.Add(item);
             }
             
+        }
+
+        private void DayDisplayList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            synthesizer.SelectVoiceByHints(VoiceGender.Neutral, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("nl-nl"));
+            synthesizer.SpeakAsyncCancelAll();
+            synthesizer.SpeakAsync(DayDisplayList.SelectedItem.ToString());
         }
     }
 
