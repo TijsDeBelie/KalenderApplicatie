@@ -1,9 +1,11 @@
 ﻿using Calender.Exceptions;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Speech.Synthesis;
 using System.Windows;
@@ -497,6 +499,55 @@ namespace Calender
                 synthesizer.SpeakAsync(afspraak.Subject + afspraak.Beschrijving + afspraak.Bezet);
             }
 
+        }
+
+        private static void WriteItemsToFile(List<IAfspraak> items, FileStream file)
+        {
+            StreamWriter sw = new StreamWriter(file);
+            
+            foreach (object item in items)
+            {
+                //sw.WriteLine(item + ",");
+                IAfspraak afspraak = (IAfspraak)item;
+                sw.WriteLine($"{afspraak.StartTime},{afspraak.EndTime},{afspraak.Subject},{afspraak.Beschrijving},{afspraak.Locatie},{afspraak.Bezet}");
+            }
+
+            
+
+            sw.Close();
+            MessageBox.Show("Alle afspraken geëxporteerd!\n" + items.ToString());
+        }
+
+        private static void ReadItemsFromFile(FileStream file)
+        {
+            StreamReader sr = new StreamReader(file);
+
+            string currentLine;
+
+            while ((currentLine = sr.ReadLine()) != null)
+            {
+                MessageBox.Show(currentLine);
+               
+            }
+        }
+
+        private void BtnExport_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                WriteItemsToFile(DB.SelectAfspraak(), new FileStream(openFileDialog.FileName, FileMode.Create, FileAccess.Write));
+
+            }
+        }
+
+        private void BtnImport_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                ReadItemsFromFile(new FileStream(openFileDialog.FileName, FileMode.Create, FileAccess.Write));
+            }
         }
     }
 

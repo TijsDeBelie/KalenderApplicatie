@@ -38,6 +38,7 @@
             <TabItem Header="Overzicht kalenders en afspraken" Height="45">
                 <DockPanel x:Name="KalenderView" LastChildFill="false" Height="Auto" Width="Auto">
                     <GroupBox Header="{Binding ElementName=CBkalender1, Path=SelectedValue}" DockPanel.Dock="Right" Width="379" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="700" MinHeight="700" BorderThickness="0,0,0,0" ClipToBounds="True">
+                        <StackPanel>
                         <Calendar  x:Name="Cmonth"
                                 SelectionMode="SingleRange" 
                                 FirstDayOfWeek="Monday"  
@@ -57,6 +58,8 @@
                             </Calendar.RenderTransform>
 
                         </Calendar>
+                         
+                        </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Kalender Beheer" DockPanel.Dock="Left" BorderThickness="0,0,0,0" Background="{DynamicResource BG1}">
                         <StackPanel Margin="0" ToolTip="Voeg een nieuwe kalender toe, selecteer de gewenste kalender, of verwijder de geselecteerde">
@@ -239,7 +242,13 @@
 
                     </GroupBox>
                     <Image Source="calender/download.png" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="200"/>
+                    <WrapPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,25,0,0">
+                        <Label>Exporteren/Importeren : </Label>
+                        <Button x:Name="BtnExport" Margin="5" Click="BtnExport_Click">Exporteren</Button>
+                        <Button x:Name="BtnImport" Margin="5" Click="BtnImport_Click">Importeren</Button>
+                    </WrapPanel>
                 </WrapPanel>
+
             </TabItem>
         </TabControl>
     </Grid>
