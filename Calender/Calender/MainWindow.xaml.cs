@@ -4,14 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Calender
 {
@@ -34,19 +39,24 @@ namespace Calender
             DataContext = new
             {
                 status = new Status(),
-                herhaling = new Herhaling()
+                herhaling = new Herhaling(),
+               
             };
 
             KalenderLijst = DB.SelectKalender();
             Cmonth.SelectedDate = DateTime.Today;
-            CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = CBkalender3.ItemsSource = KalenderLijst;
+            CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = CBkalender3.ItemsSource  = importcalender.ItemsSource = KalenderLijst;
 
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
+
+            Image.Source = ImageSourceForBitmap(Properties.Resources.download);
 
             synthesizer.Volume = 100;
             synthesizer.Rate = 1;
 
         }
+
+
 
         /// <summary>
         ///  Methode om een afspraak toe te voegen
@@ -501,52 +511,110 @@ namespace Calender
 
         }
 
-        private static void WriteItemsToFile(List<IAfspraak> items, FileStream file)
+        private void WriteItemsToFile(List<IAfspraak> items, FileStream file)
         {
-            StreamWriter sw = new StreamWriter(file);
-            
-            foreach (object item in items)
+            try
             {
-                //sw.WriteLine(item + ",");
-                IAfspraak afspraak = (IAfspraak)item;
-                sw.WriteLine($"{afspraak.StartTime},{afspraak.EndTime},{afspraak.Subject},{afspraak.Beschrijving},{afspraak.Locatie},{afspraak.Bezet}");
+                StreamWriter sw = new StreamWriter(file);
+
+                foreach (object item in items)
+                {
+                    //sw.WriteLine(item + ",");
+                    IAfspraak afspraak = (IAfspraak)item;
+                    sw.WriteLine($"{afspraak.StartTime},{afspraak.EndTime},{afspraak.Subject},{afspraak.Beschrijving},{afspraak.Locatie},{afspraak.Bezet}");
+                }
+
+
+
+                sw.Close();
+                MessageBox.Show("Alle afspraken geëxporteerd!\nEr waren : " + items.Count + " afspraken");
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
 
-            
-
-            sw.Close();
-            MessageBox.Show("Alle afspraken geëxporteerd!\n" + items.ToString());
+            }
         }
 
-        private static void ReadItemsFromFile(FileStream file)
+        private void ReadItemsFromFile(FileStream file)
         {
-            StreamReader sr = new StreamReader(file);
-
-            string currentLine;
-
-            while ((currentLine = sr.ReadLine()) != null)
+            try
             {
-                MessageBox.Show(currentLine);
-               
+                StreamReader sr = new StreamReader(file);
+
+                string currentLine;
+                while ((currentLine = sr.ReadLine()) != null)
+                {
+                    string[] values = sr.ReadLine().Split(',');
+                    ImpExplist.Items.Add(new Afspraak(0, Convert.ToDateTime(values[0]), Convert.ToDateTime(values[1]), values[2], values[3], (values[5] == "Vrij" ? true : false)));
+                    
+                    
+                }
+                MessageBoxResult dialogResult = MessageBox.Show($"Wil je alle afspraken importeren in kalender {importcalender.SelectedValue.ToString()}?", "Importeren?", MessageBoxButton.YesNo);
+
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    foreach (Afspraak item in ImpExplist.Items)
+                    {
+                        DB.InsertAfspraak(item, (IKalender)importcalender.SelectedValue);
+                    }
+
+                    
+
+                }
+                ImpExplist.Items.Clear();
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void BtnExport_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                WriteItemsToFile(DB.SelectAfspraak(), new FileStream(openFileDialog.FileName, FileMode.Create, FileAccess.Write));
-
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    WriteItemsToFile(DB.SelectAfspraak((IKalender)importcalender.SelectedValue), new FileStream(openFileDialog.FileName, FileMode.Create, FileAccess.Write));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
             if (openFileDialog.ShowDialog() == true)
             {
-                ReadItemsFromFile(new FileStream(openFileDialog.FileName, FileMode.Create, FileAccess.Write));
+                ReadItemsFromFile(new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read));
+            }
+        }
+
+        [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool DeleteObject([In] IntPtr hObject);
+        private ImageSource ImageSourceForBitmap(Bitmap bmp)
+        {
+            var handle = bmp.GetHbitmap();
+            try
+            {
+                ImageSource newSource = Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
+                DeleteObject(handle);
+                return newSource;
+            }
+            catch (Exception ex)
+            {
+                DeleteObject(handle);
+                return null;
             }
         }
     }

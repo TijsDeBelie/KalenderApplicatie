@@ -10,7 +10,7 @@
         
       
  
-        Title="Kalenderapplicatie" Height="827.5" Width="1406.514">
+        Title="Kalenderapplicatie" Height="827.5" Width="2327.514">
     <Window.Resources>
         <local:NullToBooleanConverter x:Key="NullToBooleanConverter"></local:NullToBooleanConverter>
         <SolidColorBrush x:Key="BG" Color="Gray"/>
@@ -39,7 +39,7 @@
                 <DockPanel x:Name="KalenderView" LastChildFill="false" Height="Auto" Width="Auto">
                     <GroupBox Header="{Binding ElementName=CBkalender1, Path=SelectedValue}" DockPanel.Dock="Right" Width="379" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" MinWidth="700" MinHeight="700" BorderThickness="0,0,0,0" ClipToBounds="True">
                         <StackPanel>
-                        <Calendar  x:Name="Cmonth"
+                            <Calendar  x:Name="Cmonth"
                                 SelectionMode="SingleRange" 
                                 FirstDayOfWeek="Monday"  
                                 IsTodayHighlighted="True"
@@ -48,17 +48,17 @@
                                 VerticalAlignment="Top"
                                 SelectedDatesChanged="Cmonth_SelectedDatesChanged"
                                 MouseRightButtonDown="Cmonth_MouseRightButtonDown">
-                            <Calendar.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="3" ScaleY="3"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="2" Y="2"/>
-                                </TransformGroup>
-                            </Calendar.RenderTransform>
+                                <Calendar.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform X="2" Y="2"/>
+                                    </TransformGroup>
+                                </Calendar.RenderTransform>
 
-                        </Calendar>
-                         
+                            </Calendar>
+
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Kalender Beheer" DockPanel.Dock="Left" BorderThickness="0,0,0,0" Background="{DynamicResource BG1}">
@@ -89,7 +89,7 @@
                             </StackPanel>
                             <Button x:Name="BtnVerwijderKalender" Margin="2" Width="Auto" Height="Auto" Content="Verwijder geselecteerde kalender" Click="BtnVerwijderKalender_Click" IsEnabled="{Binding ElementName=CBkalender1,Path=SelectedItem,Converter={StaticResource NullToBooleanConverter}}"></Button>
                             <WrapPanel Margin="0,50,0,0">
-                                <Label>Spraakondersteuning : </Label>
+                                <Label>Spraakondersteuning :</Label>
                                 <CheckBox x:Name="ChkSpraak" VerticalAlignment="Center"/>
 
                             </WrapPanel>
@@ -186,7 +186,7 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Nieuwe afspraak">
+            <TabItem Header="Afspraak beheer">
                 <WrapPanel>
                     <GroupBox Header="Nieuwe Afspraak" Margin="5,0,456.4,0">
                         <StackPanel Margin="0,50,-31,0">
@@ -241,12 +241,26 @@
                         </StackPanel>
 
                     </GroupBox>
-                    <Image Source="calender/download.png" Height="200" HorizontalAlignment="Right" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="200"/>
                     <WrapPanel VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,25,0,0">
-                        <Label>Exporteren/Importeren : </Label>
-                        <Button x:Name="BtnExport" Margin="5" Click="BtnExport_Click">Exporteren</Button>
-                        <Button x:Name="BtnImport" Margin="5" Click="BtnImport_Click">Importeren</Button>
+                        <GroupBox Header="Exporteren/Importeren :" Margin="0">
+                            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" MinWidth="300">
+                                <WrapPanel Margin="0,50,0,0">
+                                    <Label Width="150">Lijst van afspraken : </Label>
+                                    <ListView x:Name="ImpExplist" MinWidth="300" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Visible"></ListView>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Width="150">Kalender : </Label>
+                                    <ComboBox x:Name="importcalender" SelectedIndex="0" MinWidth="300"></ComboBox>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Button x:Name="BtnExport" Margin="150,0,0,0" Click="BtnExport_Click" Width="100" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">Exporteren</Button>
+                                    <Button x:Name="BtnImport" Margin="5" Click="BtnImport_Click" Width="100" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center">Importeren</Button>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
                     </WrapPanel>
+
+                    <Image x:Name="Image" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Disabled" Width="100" MinWidth="50" MinHeight="50"/>
                 </WrapPanel>
 
             </TabItem>
