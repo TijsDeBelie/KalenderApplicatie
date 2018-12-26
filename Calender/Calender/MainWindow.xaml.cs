@@ -22,7 +22,7 @@ namespace Calender
         Sqlconnect DB = new Sqlconnect();
 
         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-       
+
 
         public MainWindow()
         {
@@ -42,7 +42,7 @@ namespace Calender
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 
             synthesizer.Volume = 100;
-            synthesizer.Rate = -2;
+            synthesizer.Rate = 1;
 
         }
 
@@ -471,11 +471,11 @@ namespace Calender
 
         private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
             List<IAfspraak> results = DB.SelectAfspraak((IKalender)CBkalender2.SelectedItem);
-            List<IAfspraak> filtered = results.Where(s => s.Subject.ToLower().Contains(TxtFilter.Text.ToLower()) ||s.Beschrijving.ToLower().Contains(TxtFilter.Text.ToLower())).ToList();
+            List<IAfspraak> filtered = results.Where(s => s.Subject.ToLower().Contains(TxtFilter.Text.ToLower()) || s.Beschrijving.ToLower().Contains(TxtFilter.Text.ToLower())).ToList();
             DisplayList.Items.Clear();
-            if(filtered.Count == 0)
+            if (filtered.Count == 0)
             {
                 DisplayList.Items.Add("Geen items gevonden");
 
@@ -484,14 +484,19 @@ namespace Calender
             {
                 DisplayList.Items.Add(item);
             }
-            
+
         }
 
         private void DayDisplayList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            synthesizer.SelectVoiceByHints(VoiceGender.Neutral, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("nl-nl"));
-            synthesizer.SpeakAsyncCancelAll();
-            synthesizer.SpeakAsync(DayDisplayList.SelectedItem.ToString());
+            if ((bool)ChkSpraak.IsChecked)
+            {
+                synthesizer.SelectVoiceByHints(VoiceGender.Neutral, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("nl-BE"));
+                synthesizer.SpeakAsyncCancelAll();
+                IAfspraak afspraak = (IAfspraak)DayDisplayList.SelectedValue;
+                synthesizer.SpeakAsync(afspraak.Subject + afspraak.Beschrijving + afspraak.Bezet);
+            }
+
         }
     }
 
