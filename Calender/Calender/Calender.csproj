@@ -158,7 +158,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>CalenderDb.mdf</DependentUpon>
     </Content>
-    <None Include="Resources\Picture1.bmp" />
     <None Include="Resources\tray.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

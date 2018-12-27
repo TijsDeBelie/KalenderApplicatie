@@ -40,12 +40,12 @@ namespace Calender
             {
                 status = new Status(),
                 herhaling = new Herhaling(),
-               
+
             };
 
             KalenderLijst = DB.SelectKalender();
             Cmonth.SelectedDate = DateTime.Today;
-            CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = CBkalender3.ItemsSource  = importcalender.ItemsSource = KalenderLijst;
+            CBkalender.ItemsSource = CBkalender1.ItemsSource = CBkalender2.ItemsSource = CBkalender3.ItemsSource = importcalender.ItemsSource = KalenderLijst;
 
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(OnProcessExit);
 
@@ -261,9 +261,6 @@ namespace Calender
         {
             try
             {
-
-
-
                 IKalender kalender = (IKalender)CBkalender2.SelectedValue;
                 UpdateList(kalender);
                 CBkalender.SelectedIndex = CBkalender2.SelectedIndex;
@@ -275,7 +272,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
 
             }
         }
@@ -320,7 +317,7 @@ namespace Calender
             CBkalender2.SelectedIndex = CBkalender1.SelectedIndex;
 
 
-            
+
         }
         /// <summary>
         /// Zorgt voor een synchronisatie van de comboboxen, als je op de eerste tab een kalender slecteerd ga je die ook zien in de andere tabs
@@ -548,8 +545,8 @@ namespace Calender
                 {
                     string[] values = sr.ReadLine().Split(',');
                     ImpExplist.Items.Add(new Afspraak(0, Convert.ToDateTime(values[0]), Convert.ToDateTime(values[1]), values[2], values[3], (values[5] == "Vrij" ? true : false)));
-                    
-                    
+
+
                 }
                 MessageBoxResult dialogResult = MessageBox.Show($"Wil je alle afspraken importeren in kalender {importcalender.SelectedValue.ToString()}?", "Importeren?", MessageBoxButton.YesNo);
 
@@ -560,7 +557,7 @@ namespace Calender
                         DB.InsertAfspraak(item, (IKalender)importcalender.SelectedValue);
                     }
 
-                    
+
 
                 }
                 ImpExplist.Items.Clear();
@@ -588,17 +585,27 @@ namespace Calender
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-            if (openFileDialog.ShowDialog() == true)
+            try
             {
-                ReadItemsFromFile(new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read));
+
+
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    ReadItemsFromFile(new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read));
+                }
             }
+            catch (Exception)
+            {
+                MessageBox.Show("Kon het bestand niet openen!");
+            }
+
         }
 
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]

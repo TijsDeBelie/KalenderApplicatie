@@ -196,7 +196,6 @@ C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\ro
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
-C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Calender.csprojResolveAssemblyReference.cache
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\MainWindow.g.cs
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\App.g.cs
 C:\Users\Tijs De Belie\Desktop\KalenderApplicatie\Calender\Calender\obj\Debug\Calender_Content.g.cs
