@@ -30,6 +30,8 @@ namespace Calender
 
         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
 
+        private StreamReader sr;
+        private StreamWriter sw;
 
         public MainWindow()
         {
@@ -513,13 +515,13 @@ namespace Calender
         {
             try
             {
-                StreamWriter sw = new StreamWriter(file);
+                sw = new StreamWriter(file);
 
                 foreach (object item in items)
                 {
                     //sw.WriteLine(item + ",");
                     IAfspraak afspraak = (IAfspraak)item;
-                    sw.WriteLine($"{afspraak.StartTime},{afspraak.EndTime},{afspraak.Subject},{afspraak.Beschrijving},{afspraak.Locatie},{afspraak.Bezet}");
+                    sw.WriteLine($"{afspraak.StartTime};{afspraak.EndTime};{afspraak.Subject};{afspraak.Beschrijving};{afspraak.Locatie};{afspraak.Bezet}");
                 }
 
 
@@ -530,6 +532,7 @@ namespace Calender
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                sw.Close();
 
             }
         }
@@ -538,17 +541,15 @@ namespace Calender
         {
             try
             {
-                StreamReader sr = new StreamReader(file);
+                sr = new StreamReader(file);
 
                 string currentLine;
                 while ((currentLine = sr.ReadLine()) != null)
                 {
-                    string[] values = sr.ReadLine().Split(',');
-                    ImpExplist.Items.Add(new Afspraak(0, Convert.ToDateTime(values[0]), Convert.ToDateTime(values[1]), values[2], values[3], (values[5] == "Vrij" ? true : false)));
-
-
+                    string[] values = currentLine.Split(';');
+                    ImpExplist.Items.Add(new Afspraak(0, Convert.ToDateTime(values[0]), Convert.ToDateTime(values[1]), values[2], values[3], Convert.ToBoolean(values[5])));
                 }
-                MessageBoxResult dialogResult = MessageBox.Show($"Wil je alle afspraken importeren in kalender {importcalender.SelectedValue.ToString()}?", "Importeren?", MessageBoxButton.YesNo);
+                MessageBoxResult dialogResult = MessageBox.Show($"Wil je {ImpExplist.Items.Count} afspraken importeren in kalender {importcalender.SelectedValue.ToString()}?", "Importeren?", MessageBoxButton.YesNo);
 
                 if (dialogResult == MessageBoxResult.Yes)
                 {
@@ -564,9 +565,15 @@ namespace Calender
                 sr.Close();
                 UpdateList((IKalender)importcalender.SelectedValue);
             }
+            catch(NullReferenceException ex)
+            {
+                MessageBox.Show(ex.ToString());
+                sr.Close();
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+                sr.Close();
             }
         }
 
@@ -632,6 +639,21 @@ namespace Calender
         {
             DB.DeleteAfspraak((IKalender)CBkalender1.SelectedValue);
             UpdateList((IKalender)CBkalender1.SelectedValue);
+        }
+
+        private void CBherhaling_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (CBherhaling.SelectedValue.ToString() != "Geen")
+            {
+               
+                HerhalingDatum.Visibility = LBLEind.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                
+                HerhalingDatum.Visibility = LBLEind.Visibility = Visibility.Hidden;
+            }
+            
         }
     }
 

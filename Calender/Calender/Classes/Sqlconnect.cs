@@ -209,7 +209,10 @@ namespace Calender
 
         public void InsertAfspraak(Afspraak afspraak, IKalender kalender)
         {
-
+            if(afspraak == null || kalender == null)
+            {
+                return;
+            }
             row = dataset.Tables["Afspraak"].NewRow();
 
             row["startTime"] = (DateTime)afspraak.StartTime;
