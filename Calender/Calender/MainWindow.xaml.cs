@@ -578,7 +578,7 @@ namespace Calender
             {
                 ImpExplist.Items.Clear();
                 sr = new StreamReader(file);
-
+                sr.ReadLine();     // eerste rij moet niet worden ingelezen
                 string currentLine;
                 while ((currentLine = sr.ReadLine()) != null)
                 {
