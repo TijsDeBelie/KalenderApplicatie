@@ -187,17 +187,26 @@ namespace Calender
         /// <param name="e"></param>
         private void Cmonth_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            txtDate.Text = $"{Cmonth.SelectedDates.First().ToString("dd/MM/yyyy")} - {Cmonth.SelectedDates.Last().ToString("dd/MM/yyyy")}";
-            dtpStart.Value = Cmonth.SelectedDates.First();
-            dtpEnd.Value = Cmonth.SelectedDates.Last();
-            IKalender selected = (IKalender)CBkalender1.SelectedValue;
-            if (selected == null) { DayDisplayList.Items.Clear(); return; }
-            IEnumerable<IAfspraak> results = selected.AfsprakenLijst.Where(x => x.StartTime.Date >= Cmonth.SelectedDates.First().Date && x.EndTime.Date <= Cmonth.SelectedDates.Last().Date.AddDays(1));
-            DayDisplayList.Items.Clear();
-            foreach (Afspraak item in results)
+            try
             {
-                DayDisplayList.Items.Add(item);
+                txtDate.Text = $"{Cmonth.SelectedDates.First().ToString("dd/MM/yyyy")} - {Cmonth.SelectedDates.Last().ToString("dd/MM/yyyy")}";
+                dtpStart.Value = Cmonth.SelectedDates.First();
+                dtpEnd.Value = Cmonth.SelectedDates.Last();
+                IKalender selected = (IKalender)CBkalender1.SelectedValue;
+                if (selected == null) { DayDisplayList.Items.Clear(); return; }
+                IEnumerable<IAfspraak> results = selected.AfsprakenLijst.Where(x => x.StartTime.Date >= Cmonth.SelectedDates.First().Date && x.EndTime.Date <= Cmonth.SelectedDates.Last().Date.AddDays(1));
+                DayDisplayList.Items.Clear();
+                foreach (Afspraak item in results)
+                {
+                    DayDisplayList.Items.Add(item);
+                }
             }
+            catch (Exception)
+            {
+
+               
+            }
+            
 
         }
         /// <summary>
