@@ -31,7 +31,7 @@ namespace Calender
     public partial class MainWindow : Window
     {
         ObservableCollection<IKalender> KalenderLijst = new ObservableCollection<IKalender>();
-        Sqlconnect DB = new Sqlconnect();
+        static Sqlconnect DB = new Sqlconnect();
 
         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
 
@@ -645,9 +645,7 @@ namespace Calender
                     {
                         DB.InsertAfspraak(item, (IKalender)importcalender.SelectedValue);
                     }
-
-
-
+                    
                 }
                 if (dialogResult == MessageBoxResult.No)
                 {
@@ -782,7 +780,7 @@ namespace Calender
 
         }
 
-        private void calcNextNotif()
+        public static void calcNextNotif()
         {
 
             /* We berekenen wanneer de volgende afspraak is. Notificatie één uur vroeger
@@ -796,18 +794,20 @@ namespace Calender
                 bool gevonden = false;
                 foreach(var afspraak in afspraken)
                 {
-                    if (afspraak.StartTime >= DateTime.Now && gevonden == false)
+                    if (afspraak.StartTime.AddHours(-1) >= DateTime.Now && gevonden == false)
                     {
-                        DateTime nextAfspraak = afspraken.First().StartTime;
+                        gevonden = true;
+                        DateTime nextAfspraak = afspraak.StartTime;
                         TimeSpan activationTime = TimeSpan.Parse(nextAfspraak.AddHours(-1).ToString("HH:mm"));
 
-                        TimeSpan timeLeftUntilFirstRun = ((day - now) + activationTime);
+                        TimeSpan timeLeftUntilFirstRun = (activationTime - TimeSpan.Parse(DateTime.Now.ToString("HH:mm")));
 
-                        Timer execute = new Timer();
+                        Timer execute = new Timer(timeLeftUntilFirstRun.TotalMilliseconds);
                         execute.Interval = timeLeftUntilFirstRun.TotalMilliseconds;
                         execute.Elapsed += notifNextAfspraak;
-                        execute.Start();
+                        //execute.Start();
                         execute.AutoReset = true;
+                        execute.Enabled = true;
                         gevonden = true;
                     }
                 }
@@ -815,7 +815,7 @@ namespace Calender
             }
         }
 
-        private void notifNextAfspraak(object sender, ElapsedEventArgs e)
+        private static void notifNextAfspraak(object sender, ElapsedEventArgs e)
         {
             IAfspraak afspraak = DB.SelectAfspraak().First();
             notify(afspraak.Subject + " " + afspraak.Beschrijving, 1);

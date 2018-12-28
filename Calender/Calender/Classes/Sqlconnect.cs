@@ -167,14 +167,14 @@ namespace Calender
                 }
                 else
                 {
-                    MessageBox.Show("De database kan niet geladen worden, het programma sluit nu af");
+                   MainWindow.notify("De database kan niet geladen worden, het programma sluit nu af",4);
                     Environment.Exit(-1);
                 }
             }
             catch (Exception)
             {
 
-                MessageBox.Show("Er kwam een error voor bij de initialisatie van de database tabel Afspraak!\nHet programma sluit nu af!");
+                MainWindow.notify("Er kwam een error voor bij de initialisatie van de database tabel Afspraak!\nHet programma sluit nu af!", 4);
                 Environment.Exit(1);
             }
         }
@@ -197,14 +197,14 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kon de nieuwe kalender niet invoegen\n" + ex.Message);
+                MainWindow.notify("Kon de nieuwe kalender niet invoegen\n" + ex.Message,4);
             }
         }
 
         public void BevestigAfspraak(int times)
         {
 
-            MessageBox.Show($"Nieuwe Afspraak is {times} keer toegevoegd");
+            MainWindow.notify($"Nieuwe Afspraak is {times} keer toegevoegd",1);
 
         }
 
@@ -226,7 +226,7 @@ namespace Calender
             dataset.Tables["Afspraak"].Rows.Add(row);
 
             adapterAfspraak.Update(dataset, "Afspraak");
-
+            MainWindow.calcNextNotif();
         }
 
         public void DeleteAfspraak(Afspraak afspraak)
@@ -238,6 +238,9 @@ namespace Calender
                 row.Delete();
                 adapterAfspraak.Update(dataset, "Afspraak");
                 MainWindow.notify("Afspraak is verwijderd", 1);
+
+                MainWindow.calcNextNotif();
+
             }
             catch (Exception ex)
             {
@@ -294,7 +297,7 @@ namespace Calender
                 DataRow row = dataset.Tables["Kalender"].Rows.Find((int)kalender.Id);
                 row.Delete();
                 adapterKalender.Update(dataset, "Kalender");
-                MessageBox.Show("Kalender is verwijderd");
+                MainWindow.notify("Kalender is verwijderd",4);
             }
             catch (Exception ex)
             {
