@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calender", "Calender\Calender.csproj", "{6F221C51-50F6-46A2-8A8C-62C3BDDAEDC6}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CalenderApp_Tijs_Thomas", "CalenderApp_Tijs_Thomas\CalenderApp_Tijs_Thomas.vdproj", "{1D0C65AF-4AF8-4305-8493-1F44A7EA6DEC}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "KalenderApp_Thomas_Tijs", "KalenderApp_Thomas_Tijs\KalenderApp_Thomas_Tijs.vdproj", "{A0CEDD3C-B55C-444A-82AE-3C0B6CE4B449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,8 @@ Global
 		{1D0C65AF-4AF8-4305-8493-1F44A7EA6DEC}.Debug|Any CPU.ActiveCfg = Debug
 		{1D0C65AF-4AF8-4305-8493-1F44A7EA6DEC}.Debug|Any CPU.Build.0 = Debug
 		{1D0C65AF-4AF8-4305-8493-1F44A7EA6DEC}.Release|Any CPU.ActiveCfg = Release
+		{A0CEDD3C-B55C-444A-82AE-3C0B6CE4B449}.Debug|Any CPU.ActiveCfg = Debug
+		{A0CEDD3C-B55C-444A-82AE-3C0B6CE4B449}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
