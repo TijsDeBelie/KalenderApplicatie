@@ -552,7 +552,7 @@ namespace Calender
                 ImpExplist.Items.Clear();
                 if ( items == null) { return; }
                 sw = new StreamWriter(file);
-
+                sw.WriteLine("De waarde True of False duidt de status vrij(false) of bezet(true) aan");
                 foreach (object item in items)
                 {
                     //sw.WriteLine(item + ",");
@@ -621,11 +621,11 @@ namespace Calender
         {
             try
             {
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
-                if (openFileDialog.ShowDialog() == true)
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == true)
                 {
-                    WriteItemsToFile(DB.SelectAfspraak((IKalender)importcalender.SelectedValue), new FileStream(openFileDialog.FileName, FileMode.Create, FileAccess.Write));
+                    WriteItemsToFile(DB.SelectAfspraak((IKalender)importcalender.SelectedValue), new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write));
                 }
             }
             catch (Exception ex)
@@ -643,6 +643,7 @@ namespace Calender
                 openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
                 if (openFileDialog.ShowDialog() == true)
                 {
+
                     ReadItemsFromFile(new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read));
                 }
             }

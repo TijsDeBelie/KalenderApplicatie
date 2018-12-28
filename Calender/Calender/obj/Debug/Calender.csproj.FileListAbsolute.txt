@@ -245,3 +245,5 @@ C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\bin\Debug\ru\Xcee
 C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\obj\Debug\Calender.Properties.Resources.resources
+C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\bin\Debug\download.png
+C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\bin\Debug\Resources\tray.ico
