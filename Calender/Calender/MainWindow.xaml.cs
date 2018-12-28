@@ -66,7 +66,7 @@ namespace Calender
             HerhalingDatum.DisplayDateStart = DateTime.Today;
             HerhalingDatum.BlackoutDates.AddDatesInPast();
 
-
+            calcNextNotif();
 
         }
 
@@ -806,7 +806,8 @@ namespace Calender
 
         private void notifNextAfspraak(object sender, ElapsedEventArgs e)
         {
-            // eigenlijke code notif
+            IAfspraak afspraak = DB.SelectAfspraak().First();
+            notify(afspraak.Subject + " " + afspraak.Beschrijving, 1);
         }
     }
 
