@@ -56,6 +56,10 @@ namespace Calender
             synthesizer.Volume = 100;
             synthesizer.Rate = 1;
 
+            
+            HerhalingDatum.DisplayDateStart = DateTime.Today;
+            HerhalingDatum.BlackoutDates.AddDatesInPast();
+
         }
 
 
@@ -288,8 +292,9 @@ namespace Calender
             DisplayList.Items.Clear();
             if (Selected == null) return;
 
-
-            foreach (Afspraak item in DB.SelectAfspraak(Selected))
+            IList<IAfspraak> lijst = DB.SelectAfspraak(Selected);
+            lijst = lijst.OrderBy(x => x.StartTime).ToList();
+            foreach (Afspraak item in lijst)
             {
                 DisplayList.Items.Add(item);
                 DayDisplayList.Items.Add(item);
