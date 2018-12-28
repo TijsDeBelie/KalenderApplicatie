@@ -115,29 +115,6 @@ namespace Calender
                     {
                         voegToe(onderwerp, beschrijving, kalender, bezet);
                     }
-
-                    /*
-                    //Bij een lijst van afspraken met meerdere items gaat De afspraak meerdere keren worden ingevoerd, dit is denk ik niet de bedoeling 
-                    foreach (var afspraak in afspraken)
-                    {
-                        if (afspraak.Bezet == true)
-                        {
-                            if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
-                            {
-                                MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
-                                if (dialogResult == MessageBoxResult.Yes)
-                                {
-                                    voegToe(onderwerp, beschrijving, kalender, bezet);
-                                   // break;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            voegToe(onderwerp, beschrijving, kalender, bezet);
-                           // break;
-                        }
-                    }*/
                 }
                 else
                 {
@@ -146,7 +123,7 @@ namespace Calender
             }
             catch (StartDateIsBeforeEndDate)
             {
-                notify("De startdatum is groter of gelijk aan de eindatum!",4);
+                notify("De startdatum is groter of gelijk aan de eindatum!", 4);
 
             }
         }
@@ -201,17 +178,17 @@ namespace Calender
             }
             catch (Exceptions.NameIsEmpty ex)
             {
-                notify("De afspraak is niet toegevoegd omdat er een veld leeg was!\n" + ex.Message,4);
+                notify("De afspraak is niet toegevoegd omdat er een veld leeg was!\n" + ex.Message, 4);
 
             }
             catch (StartDateIsBeforeEndDate)
             {
-                notify("De startdatum is groter of gelijk aan de eindatum!",4);
+                notify("De startdatum is groter of gelijk aan de eindatum!", 4);
 
             }
             catch (Exception ex)
             {
-               notify("Er is een fout opgetreden bij het toevoegen van de afspraak!\n" + ex.Message,4);
+                notify("Er is een fout opgetreden bij het toevoegen van de afspraak!\n" + ex.Message, 4);
             }
 
 
@@ -331,7 +308,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-               notify(ex.Message,4);
+                notify(ex.Message, 4);
 
             }
         }
@@ -406,7 +383,7 @@ namespace Calender
             }
             catch
             {
-                notify("Kon deze afspraak niet verwijderen!",4);
+                notify("Kon deze afspraak niet verwijderen!", 4);
             }
 
         }
@@ -437,7 +414,7 @@ namespace Calender
             }
             catch
             {
-               notify("Kon deze afspraak niet vinden!",4);
+                notify("Kon deze afspraak niet vinden!", 4);
             }
         }
         /// <summary>
@@ -460,7 +437,7 @@ namespace Calender
             }
             catch (InvalidOperationException)
             {
-               notify("Selecteer een Afspraak om deze te wijzigen\n Kijk zeker na of alle velden zijn ingevuld",4);
+                notify("Selecteer een Afspraak om deze te wijzigen\n Kijk zeker na of alle velden zijn ingevuld", 4);
 
             }
             catch (Exceptions.NameIsEmpty)
@@ -558,7 +535,7 @@ namespace Calender
             catch (Exception ex)
             {
 
-               notify("Kon de afspraak niet kopiëren!\n" + ex.Message, 4);
+                notify("Kon de afspraak niet kopiëren!\n" + ex.Message, 4);
             }
 
         }
@@ -618,7 +595,7 @@ namespace Calender
             catch (Exception ex)
             {
                 notify(ex.Message, 4);//error
-                
+
                 sw.Close();
 
             }
@@ -645,7 +622,7 @@ namespace Calender
                     {
                         DB.InsertAfspraak(item, (IKalender)importcalender.SelectedValue);
                     }
-                    
+
                 }
                 if (dialogResult == MessageBoxResult.No)
                 {
@@ -657,7 +634,7 @@ namespace Calender
             }
             catch (NullReferenceException ex)
             {
-               notify("Er ging iets fout :\n" + ex.Message, 4);//error
+                notify("Er ging iets fout :\n" + ex.Message, 4);//error
                 sr.Close();
             }
             catch (Exception ex)
@@ -752,7 +729,7 @@ namespace Calender
                     offsetX: 10,
                     offsetY: 10);
                 /* * */
-                
+
                 cfg.DisplayOptions.TopMost = true; // set the option to show notifications over other windows
                 cfg.DisplayOptions.Width = 300; // set the notifications width
 
@@ -780,6 +757,8 @@ namespace Calender
 
         }
 
+
+
         public static void calcNextNotif()
         {
 
@@ -788,27 +767,22 @@ namespace Calender
              * */
             if (DB.SelectAfspraak().Count > 0)
             {
-                TimeSpan day = new TimeSpan(24, 00, 00);
-                TimeSpan now = TimeSpan.Parse(DateTime.Now.ToString("HH:MM"));
+                //TimeSpan day = new TimeSpan(24, 00, 00);
+                //TimeSpan now = TimeSpan.Parse(DateTime.Now.ToString("HH:MM"));
                 List<IAfspraak> afspraken = DB.SelectAfspraak();
                 bool gevonden = false;
-                foreach(var afspraak in afspraken)
+                foreach (var afspraak in afspraken)
                 {
                     if (afspraak.StartTime.AddHours(-1) >= DateTime.Now && gevonden == false)
                     {
                         gevonden = true;
                         DateTime nextAfspraak = afspraak.StartTime;
-                        TimeSpan activationTime = TimeSpan.Parse(nextAfspraak.AddHours(-1).ToString("HH:mm"));
-
-                        TimeSpan timeLeftUntilFirstRun = (activationTime - TimeSpan.Parse(DateTime.Now.ToString("HH:mm")));
-
-                        Timer execute = new Timer(timeLeftUntilFirstRun.TotalMilliseconds);
-                        execute.Interval = timeLeftUntilFirstRun.TotalMilliseconds;
+                        DateTime nu = DateTime.Now;
+                        double interval = (nextAfspraak.AddHours(-1) - nu).TotalMilliseconds;
+                        Timer execute = new Timer(interval);
                         execute.Elapsed += notifNextAfspraak;
-                        //execute.Start();
-                        execute.AutoReset = true;
                         execute.Enabled = true;
-                        gevonden = true;
+
                     }
                 }
                 gevonden = false;
