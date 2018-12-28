@@ -79,10 +79,37 @@ namespace Calender
 
                 if (Convert.ToDateTime(dtpStart.Value).CompareTo(Convert.ToDateTime(dtpEnd.Value)) != -1) { throw new StartDateIsBeforeEndDate(); }
                 List<IAfspraak> afspraken = DB.SelectAfspraak();
+                bool overlapping = false;
                 if (afspraken.Count >= 1)
                 {
 
+                    
+                    foreach(var afspraak in afspraken)
+                    {
+                        if(afspraak.Bezet == true || bezet)
+                        {
+                            if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
+                            {
+                                overlapping = true;
+                                
+                            }
+                        }
+                    }
 
+                    if (overlapping)
+                    {
+                        MessageBoxResult dialogResult = MessageBox.Show("Weet je zeker dat je wilt toevoegen?", "Er is een overlapping!", MessageBoxButton.YesNo);
+                        if (dialogResult == MessageBoxResult.Yes)
+                        {
+                            voegToe(onderwerp, beschrijving, kalender, bezet);
+                            //break;
+                        }
+                    } else
+                    {
+                        voegToe(onderwerp, beschrijving, kalender, bezet);
+                    }
+                    
+                    /*
                     //Bij een lijst van afspraken met meerdere items gaat De afspraak meerdere keren worden ingevoerd, dit is denk ik niet de bedoeling 
                     foreach (var afspraak in afspraken)
                     {
@@ -94,16 +121,16 @@ namespace Calender
                                 if (dialogResult == MessageBoxResult.Yes)
                                 {
                                     voegToe(onderwerp, beschrijving, kalender, bezet);
-                                    break;
+                                   // break;
                                 }
                             }
                         }
                         else
                         {
                             voegToe(onderwerp, beschrijving, kalender, bezet);
-                            break;
+                           // break;
                         }
-                    }
+                    }*/
                 }
                 else
                 {
@@ -385,6 +412,13 @@ namespace Calender
                 txtAfspraakBeschrijving.Text = afspraak.Beschrijving;
                 txtAfspraakStart.Value = afspraak.StartTime;
                 txtAfspraakEind.Value = afspraak.EndTime;
+                if (afspraak.Bezet)
+                {
+                    CBstatus2.SelectedIndex = 1;
+                } else
+                {
+                    CBstatus2.SelectedIndex = 0;
+                }
             }
             catch
             {
