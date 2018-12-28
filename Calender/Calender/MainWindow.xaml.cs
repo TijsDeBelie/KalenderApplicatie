@@ -544,8 +544,11 @@ namespace Calender
 
         private void WriteItemsToFile(List<IAfspraak> items, FileStream file)
         {
+        
             try
             {
+                ImpExplist.Items.Clear();
+                if ( items == null) { return; }
                 sw = new StreamWriter(file);
 
                 foreach (object item in items)
@@ -559,6 +562,7 @@ namespace Calender
 
                 sw.Close();
                 MessageBox.Show("Alle afspraken geëxporteerd!\nEr waren : " + items.Count + " afspraken");
+                ImpExplist.Items.Clear();
             }
             catch (Exception ex)
             {
@@ -572,6 +576,7 @@ namespace Calender
         {
             try
             {
+                ImpExplist.Items.Clear();
                 sr = new StreamReader(file);
 
                 string currentLine;
