@@ -146,7 +146,7 @@ namespace Calender
             }
             catch (StartDateIsBeforeEndDate)
             {
-                MessageBox.Show("De startdatum is groter of gelijk aan de eindatum!");
+                notify("De startdatum is groter of gelijk aan de eindatum!",4);
 
             }
         }
@@ -201,17 +201,17 @@ namespace Calender
             }
             catch (Exceptions.NameIsEmpty ex)
             {
-                MessageBox.Show("De afspraak is niet toegevoegd omdat er een veld leeg was!\n" + ex.Message);
+                notify("De afspraak is niet toegevoegd omdat er een veld leeg was!\n" + ex.Message,4);
 
             }
             catch (StartDateIsBeforeEndDate)
             {
-                MessageBox.Show("De startdatum is groter of gelijk aan de eindatum!");
+                notify("De startdatum is groter of gelijk aan de eindatum!",4);
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Er is een fout opgetreden bij het toevoegen van de afspraak!\n" + ex.Message);
+               notify("Er is een fout opgetreden bij het toevoegen van de afspraak!\n" + ex.Message,4);
             }
 
 
@@ -245,6 +245,12 @@ namespace Calender
 
 
         }
+
+        internal static void notify(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Snelle manier om een afspraak in te voeren op de geselecteerde datum. 
         /// </summary>
@@ -282,6 +288,7 @@ namespace Calender
                 DB.InsertKalender(nieuweKalender);
                 UpdateKalenderLijst();
                 MaakVeldenLeeg();
+                notify("kalender is succesvol toegevoegd!", 1);
             }
             catch (Exception)
             {
@@ -324,7 +331,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+               notify(ex.Message,4);
 
             }
         }
@@ -399,7 +406,7 @@ namespace Calender
             }
             catch
             {
-                MessageBox.Show("Kon deze afspraak niet verwijderen!");
+                notify("Kon deze afspraak niet verwijderen!",4);
             }
 
         }
@@ -430,7 +437,7 @@ namespace Calender
             }
             catch
             {
-                MessageBox.Show("Kon deze afspraak niet vinden!");
+               notify("Kon deze afspraak niet vinden!",4);
             }
         }
         /// <summary>
@@ -453,20 +460,20 @@ namespace Calender
             }
             catch (InvalidOperationException)
             {
-                MessageBox.Show("Selecteer een Afspraak om deze te wijzigen\n Kijk zeker na of alle velden zijn ingevuld");
+               notify("Selecteer een Afspraak om deze te wijzigen\n Kijk zeker na of alle velden zijn ingevuld",4);
 
             }
             catch (Exceptions.NameIsEmpty)
             {
-                MessageBox.Show("Kon de afspraak niet wijzigen omdat er een veld leeg is");
+                notify("Kon de afspraak niet wijzigen omdat er een veld leeg is", 4);
             }
             catch (StartDateIsBeforeEndDate)
             {
-                MessageBox.Show("De startdatum is groter of gelijk aan de eindatum!");
+                notify("De startdatum is groter of gelijk aan de eindatum!", 4);
             }
             catch (Exception)
             {
-                MessageBox.Show("Kon de afspraak niet wijzigen");
+                notify("Kon de afspraak niet wijzigen", 4);
             }
         }
 
@@ -488,7 +495,7 @@ namespace Calender
             }
             catch (Exceptions.NameIsEmpty)
             {
-                MessageBox.Show("Kon de kalender niet wijzigen omdat er een veld leeg was");
+                notify("Kon de kalender niet wijzigen omdat er een veld leeg was", 4);
             }
         }
         /// <summary>
@@ -504,7 +511,7 @@ namespace Calender
             }
             catch
             {
-                MessageBox.Show("Kon de lijst van kalenders niet updaten");
+                notify("Kon de lijst van kalenders niet updaten", 4);
             }
         }
 
@@ -546,11 +553,12 @@ namespace Calender
             {
                 DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (CBstatus2.SelectedValue.ToString() == "Vrij" ? true : false)), (IKalender)CBkalender2.SelectedItem);
                 UpdateList((IKalender)CBkalender2.SelectedItem);
+                notify("Afspraak is gekopieerd!", 1);
             }
             catch (Exception ex)
             {
 
-               notify("Kon de afspraak niet kopiëren!\n" + ex.Message, );
+               notify("Kon de afspraak niet kopiëren!\n" + ex.Message, 4);
             }
 
         }
@@ -737,7 +745,7 @@ namespace Calender
 
         }
 
-        private void notify(string message, int method)
+        public static void notify(string message, int method)
         {
             Notifier notifier = new Notifier(cfg =>
             {
@@ -746,6 +754,9 @@ namespace Calender
                     offsetX: 10,
                     offsetY: 10);
                 /* * */
+                
+                cfg.DisplayOptions.TopMost = true; // set the option to show notifications over other windows
+                cfg.DisplayOptions.Width = 300; // set the notifications width
 
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
                 notificationLifetime: TimeSpan.FromSeconds(20),

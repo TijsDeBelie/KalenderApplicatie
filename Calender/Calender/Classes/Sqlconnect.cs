@@ -8,6 +8,7 @@ using Calender.Exceptions;
 using System.Data;
 using System.Collections.ObjectModel;
 using Xceed.Wpf.Toolkit;
+using Calender;
 
 
 namespace Calender
@@ -236,12 +237,11 @@ namespace Calender
                 DataRow row = dataset.Tables["Afspraak"].Rows.Find((int)afspraak.Id);
                 row.Delete();
                 adapterAfspraak.Update(dataset, "Afspraak");
-
-                MessageBox.Show("Afspraak is verwijderd");
+                MainWindow.notify("Afspraak is verwijderd", 1);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kon afspraak niet verwijderen\n" + ex.Message);
+                MainWindow.notify("Kon afspraak niet verwijderen\n" + ex.Message, 4);
 
             }
         }
@@ -266,7 +266,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kon afspraak niet verwijderen\n" + ex.Message);
+                MainWindow.notify("Kon afspraak niet verwijderen\n" + ex.Message, 4);
 
             }
         }
@@ -299,7 +299,7 @@ namespace Calender
             catch (Exception ex)
             {
 
-                MessageBox.Show("Kon kalender niet verwijderen!\n" + ex.Message);
+                MainWindow.notify("Kon kalender niet verwijderen!\n" + ex.Message, 4);
             }
 
         }
@@ -320,7 +320,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de kalenders!\n" + ex.Message);
+                MainWindow.notify("Een error heeft zich voorgedaan bij het selecteren van de kalenders!\n" + ex.Message,4);
 
             }
 
@@ -341,12 +341,12 @@ namespace Calender
                     row[5] = kalender.Id;
 
                     adapterAfspraak.Update(dataset, "Afspraak");
-                    MessageBox.Show("Afspraak is gewijzigd");
+                    MainWindow.notify("Afspraak is gewijzigd",1);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Kon Afspraak niet wijzigen!\n" + ex.Message);
+                MainWindow.notify("Kon Afspraak niet wijzigen!\n" + ex.Message,4);
 
             }
         }
@@ -363,13 +363,13 @@ namespace Calender
                     row[1] = Naam;
                     row[2] = Beschrijving;
                     adapterKalender.Update(dataset, "Kalender");
-                    MessageBox.Show("Kalender is gewijzigd");
+                    MainWindow.notify("Kalender is gewijzigd",1);
                 }
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show("Kon Kalender niet wijzigen\n" + ex.Message);
+                MainWindow.notify("Kon Kalender niet wijzigen\n" + ex.Message, 4);
             }
 
         }
@@ -399,7 +399,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message);
+                MainWindow.notify("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message,4);
             }
             returnlist = returnlist.OrderBy(x => x.StartTime).ToList();
 
@@ -421,7 +421,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message);
+                MainWindow.notify("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message,4);
 
             }
             returnlist = returnlist.OrderBy(x => x.StartTime).ToList();
@@ -448,7 +448,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de kalenders!\n" + ex.Message);
+                MainWindow.notify("Een error heeft zich voorgedaan bij het selecteren van de kalenders!\n" + ex.Message,4);
 
             }
 
