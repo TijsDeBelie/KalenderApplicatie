@@ -60,6 +60,8 @@ namespace Calender
             HerhalingDatum.DisplayDateStart = DateTime.Today;
             HerhalingDatum.BlackoutDates.AddDatesInPast();
 
+            
+
         }
 
 
@@ -557,8 +559,6 @@ namespace Calender
                     IAfspraak afspraak = (IAfspraak)item;
                     sw.WriteLine($"{afspraak.StartTime};{afspraak.EndTime};{afspraak.Subject};{afspraak.Beschrijving};{afspraak.Locatie};{afspraak.Bezet}");
                 }
-
-
 
                 sw.Close();
                 MessageBox.Show("Alle afspraken geëxporteerd!\nEr waren : " + items.Count + " afspraken");

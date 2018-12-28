@@ -102,7 +102,7 @@
                         <StackPanel Width="Auto" DockPanel.Dock="Top" Height="Auto">
                             <Label  Width="200">Geselecteerde datumrange</Label>
                             <TextBox x:Name="txtDate" Height="Auto"  Width="{Binding ActualWidth, ElementName=DayDisplayList}" IsEnabled="False" Background="#FFD4C8C8" HorizontalAlignment="Left" Margin="0,0,0,0"/>
-                            <ListBox x:Name="DayDisplayList" Height="Auto" Width="1429" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,-0.2,0" ClipToBounds="True" SelectionChanged="DayDisplayList_SelectionChanged" MinWidth="300" HorizontalAlignment="Left"/>
+                            <ListBox x:Name="DayDisplayList" Height="700" Width="1429" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Visible" Margin="0,0,-0.2,0" ScrollViewer.CanContentScroll="True" ClipToBounds="True" SelectionChanged="DayDisplayList_SelectionChanged" MinWidth="300" HorizontalAlignment="Left"/>
                         </StackPanel>
                     </GroupBox>
                 </DockPanel>
