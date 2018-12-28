@@ -114,6 +114,7 @@ namespace Calender
 
             }
         }
+
         private void voegToe(string onderwerp, string beschrijving, IKalender kalender, bool bezet)
         {
             try
@@ -459,10 +460,13 @@ namespace Calender
             DB.conClose();
         }
 
-
+        /// <summary>
+        /// Methode om alle velden opleeg te maken. 
+        /// </summary>
         private void MaakVeldenLeeg()
         {
             DisplayList.UnselectAll();
+            DayDisplayList.UnselectAll();
             txtKalenderBeschrijving2.Text = string.Empty;
             txtKalenderNaam2.Text = string.Empty;
             txtAfspraakStart.Value = null;
@@ -478,27 +482,40 @@ namespace Calender
             txtLocatie.Text = string.Empty;
             txtOnderwerp.Text = string.Empty;
         }
-
+        /// <summary>
+        /// Kopieert een afspraak
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnKopieer_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (CBstatus2.SelectedValue.ToString() == "Vrij" ? true : false)), (IKalender)CBkalender2.SelectedItem);
+                UpdateList((IKalender)CBkalender2.SelectedItem);
+            }
+            catch (Exception ex)
+            {
 
-            DB.InsertAfspraak(new Afspraak(0, (DateTime)txtAfspraakStart.Value, (DateTime)txtAfspraakEind.Value, txtAfspraakTitel.Text, txtAfspraakBeschrijving.Text, (CBstatus2.SelectedValue.ToString() == "Vrij" ? true : false)), (IKalender)CBkalender2.SelectedItem);
-            UpdateList((IKalender)CBkalender2.SelectedItem);
+                MessageBox.Show("Kon de afspraak niet kopiëren!\n" + ex.Message);
+            }
+            
         }
 
         private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            DisplayList.IsEnabled = true;
             List<IAfspraak> results = DB.SelectAfspraak((IKalender)CBkalender2.SelectedItem);
             List<IAfspraak> filtered = results.Where(s => s.Subject.ToLower().Contains(TxtFilter.Text.ToLower()) || s.Beschrijving.ToLower().Contains(TxtFilter.Text.ToLower())).ToList();
             DisplayList.Items.Clear();
             if (filtered.Count == 0)
             {
                 DisplayList.Items.Add("Geen items gevonden");
-
+                DisplayList.IsEnabled = false;
             }
             foreach (IAfspraak item in filtered)
             {
+                DisplayList.IsEnabled = true;
                 DisplayList.Items.Add(item);
             }
 
