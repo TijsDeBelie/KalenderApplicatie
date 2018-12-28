@@ -21,6 +21,7 @@ using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
 using ToastNotifications.Messages;
+using System.Timers;
 
 namespace Calender
 {
@@ -768,6 +769,33 @@ namespace Calender
             }
 
 
+        }
+
+        private void calcNextNotif()
+        {
+
+            /* We berekenen wanneer de volgende afspraak is. Notificatie één uur vroeger
+             * We gebruiken hiervoor de klasse Timer en triggeren de Elapsed event 
+             * */
+
+            TimeSpan day = new TimeSpan(24, 00, 00);
+            TimeSpan now = TimeSpan.Parse(DateTime.Now.ToString("HH:MM"));
+            List<IAfspraak> afspraken = DB.SelectAfspraak();
+            DateTime nextAfspraak = afspraken[0].StartTime;
+            TimeSpan activationTime = TimeSpan.Parse(nextAfspraak.AddHours(-1).ToString("HH:mm"));
+
+            TimeSpan timeLeftUntilFirstRun = ((day - now) + activationTime);
+
+            Timer execute = new Timer();
+            execute.Interval = timeLeftUntilFirstRun.TotalMilliseconds;
+            execute.Elapsed += notifNextAfspraak;
+            execute.Start();
+            execute.AutoReset = true;
+        }
+
+        private void notifNextAfspraak(object sender, ElapsedEventArgs e)
+        {
+            // eigenlijke code notif
         }
     }
 
