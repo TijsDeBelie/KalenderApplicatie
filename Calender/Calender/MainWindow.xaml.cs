@@ -537,7 +537,7 @@ namespace Calender
                 synthesizer.SelectVoiceByHints(VoiceGender.Neutral, VoiceAge.NotSet, 0, CultureInfo.GetCultureInfo("nl-BE"));
                 synthesizer.SpeakAsyncCancelAll();
                 IAfspraak afspraak = (IAfspraak)DayDisplayList.SelectedValue;
-                synthesizer.SpeakAsync(afspraak.Subject + afspraak.Beschrijving + afspraak.Bezet);
+                synthesizer.SpeakAsync(afspraak.Subject + afspraak.Beschrijving);
             }
 
         }
@@ -592,18 +592,22 @@ namespace Calender
 
 
                 }
+                if (dialogResult == MessageBoxResult.No)
+                {
+                    MessageBox.Show("Er zijn geen afspraken geïmpoorteerd");
+                }
                 ImpExplist.Items.Clear();
                 sr.Close();
                 UpdateList((IKalender)importcalender.SelectedValue);
             }
             catch(NullReferenceException ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Er ging iets fout :\n" + ex.Message);
                 sr.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Er ging iets fout bij het importeren, is het csv bestand goed geformatteerd?\n" + ex.Message);
                 sr.Close();
             }
         }
@@ -630,8 +634,6 @@ namespace Calender
         {
             try
             {
-
-
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
                 if (openFileDialog.ShowDialog() == true)
@@ -643,9 +645,7 @@ namespace Calender
             {
                 MessageBox.Show("Kon het bestand niet openen!");
             }
-
         }
-
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeleteObject([In] IntPtr hObject);

@@ -401,6 +401,8 @@ namespace Calender
             {
                 MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message);
             }
+            returnlist = returnlist.OrderBy(x => x.StartTime).ToList();
+
             return returnlist;
         }
 
@@ -422,6 +424,8 @@ namespace Calender
                 MessageBox.Show("Een error heeft zich voorgedaan bij het selecteren van de afspraak\n" + ex.Message);
 
             }
+            returnlist = returnlist.OrderBy(x => x.StartTime).ToList();
+
             return returnlist;
         }
         public ObservableCollection<IKalender> SelectKalender()
