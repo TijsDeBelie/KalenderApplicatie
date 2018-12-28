@@ -17,6 +17,10 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
+using ToastNotifications.Messages;
 
 namespace Calender
 {
@@ -32,6 +36,7 @@ namespace Calender
 
         private StreamReader sr;
         private StreamWriter sw;
+
 
         public MainWindow()
         {
@@ -56,11 +61,11 @@ namespace Calender
             synthesizer.Volume = 100;
             synthesizer.Rate = 1;
 
-            
+
             HerhalingDatum.DisplayDateStart = DateTime.Today;
             HerhalingDatum.BlackoutDates.AddDatesInPast();
 
-            
+
 
         }
 
@@ -83,15 +88,15 @@ namespace Calender
                 if (afspraken.Count >= 1)
                 {
 
-                    
-                    foreach(var afspraak in afspraken)
+
+                    foreach (var afspraak in afspraken)
                     {
-                        if(afspraak.Bezet == true || bezet)
+                        if (afspraak.Bezet == true || bezet)
                         {
                             if (Convert.ToDateTime(dtpStart.Value).Ticks > afspraak.StartTime.Ticks && Convert.ToDateTime(dtpStart.Value).Ticks < afspraak.EndTime.Ticks)
                             {
                                 overlapping = true;
-                                
+
                             }
                         }
                     }
@@ -104,11 +109,12 @@ namespace Calender
                             voegToe(onderwerp, beschrijving, kalender, bezet);
                             //break;
                         }
-                    } else
+                    }
+                    else
                     {
                         voegToe(onderwerp, beschrijving, kalender, bezet);
                     }
-                    
+
                     /*
                     //Bij een lijst van afspraken met meerdere items gaat De afspraak meerdere keren worden ingevoerd, dit is denk ik niet de bedoeling 
                     foreach (var afspraak in afspraken)
@@ -233,9 +239,9 @@ namespace Calender
             catch (Exception)
             {
 
-               
+
             }
-            
+
 
         }
         /// <summary>
@@ -278,7 +284,7 @@ namespace Calender
             }
             catch (Exception)
             {
-                MessageBox.Show("Kon de nieuwe kalender niet toevoegen");
+                notify("Kon de nieuwe kalender niet toevoegen", 4);
 
             }
 
@@ -415,7 +421,8 @@ namespace Calender
                 if (afspraak.Bezet)
                 {
                     CBstatus2.SelectedIndex = 1;
-                } else
+                }
+                else
                 {
                     CBstatus2.SelectedIndex = 0;
                 }
@@ -542,9 +549,9 @@ namespace Calender
             catch (Exception ex)
             {
 
-                MessageBox.Show("Kon de afspraak niet kopiëren!\n" + ex.Message);
+               notify("Kon de afspraak niet kopiëren!\n" + ex.Message, );
             }
-            
+
         }
 
         private void TxtFilter_TextChanged(object sender, TextChangedEventArgs e)
@@ -580,11 +587,11 @@ namespace Calender
 
         private void WriteItemsToFile(List<IAfspraak> items, FileStream file)
         {
-        
+
             try
             {
                 ImpExplist.Items.Clear();
-                if ( items == null) { return; }
+                if (items == null) { return; }
                 sw = new StreamWriter(file);
                 sw.WriteLine("De waarde True of False duidt de status vrij(false) of bezet(true) aan");
                 foreach (object item in items)
@@ -595,12 +602,14 @@ namespace Calender
                 }
 
                 sw.Close();
-                MessageBox.Show("Alle afspraken geëxporteerd!\nEr waren : " + items.Count + " afspraken");
+                string message = "Alle afspraken geëxporteerd!\nEr waren : " + items.Count + " afspraken";
+                notify(message, 1);//success
                 ImpExplist.Items.Clear();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                notify(ex.Message, 4);//error
+                
                 sw.Close();
 
             }
@@ -633,20 +642,20 @@ namespace Calender
                 }
                 if (dialogResult == MessageBoxResult.No)
                 {
-                    MessageBox.Show("Er zijn geen afspraken geïmpoorteerd");
+                    notify("Er zijn geen afspraken geïmpoorteerd", 3);//warning
                 }
                 ImpExplist.Items.Clear();
                 sr.Close();
                 UpdateList((IKalender)importcalender.SelectedValue);
             }
-            catch(NullReferenceException ex)
+            catch (NullReferenceException ex)
             {
-                MessageBox.Show("Er ging iets fout :\n" + ex.Message);
+               notify("Er ging iets fout :\n" + ex.Message, 4);//error
                 sr.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Er ging iets fout bij het importeren, is het csv bestand goed geformatteerd?\n" + ex.Message);
+                notify("Er ging iets fout bij het importeren, is het csv bestand goed geformatteerd?\n" + ex.Message, 4);
                 sr.Close();
             }
         }
@@ -664,7 +673,7 @@ namespace Calender
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                notify(ex.Message, 4);
             }
 
         }
@@ -683,7 +692,7 @@ namespace Calender
             }
             catch (Exception)
             {
-                MessageBox.Show("Kon het bestand niet openen!");
+                notify("Kon het bestand niet openen!", 4);
             }
         }
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
@@ -699,7 +708,7 @@ namespace Calender
                 DeleteObject(handle);
                 return newSource;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 DeleteObject(handle);
                 return null;
@@ -716,15 +725,49 @@ namespace Calender
         {
             if (CBherhaling.SelectedValue.ToString() != "Geen")
             {
-               
+
                 HerhalingDatum.Visibility = LBLEind.Visibility = Visibility.Visible;
             }
             else
             {
-                
+
                 HerhalingDatum.Visibility = LBLEind.Visibility = Visibility.Hidden;
             }
-            
+
+        }
+
+        private void notify(string message, int method)
+        {
+            Notifier notifier = new Notifier(cfg =>
+            {
+                cfg.PositionProvider = new PrimaryScreenPositionProvider(
+                    corner: Corner.BottomRight,
+                    offsetX: 10,
+                    offsetY: 10);
+                /* * */
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                notificationLifetime: TimeSpan.FromSeconds(20),
+                maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+            });
+
+            switch (method)
+            {
+                case 1:
+                    notifier.ShowSuccess(message);
+                    break;
+                case 2:
+                    notifier.ShowInformation(message);
+                    break;
+                case 3:
+                    notifier.ShowWarning(message);
+                    break;
+                case 4:
+                    notifier.ShowError(message);
+                    break;
+            }
+
+
         }
     }
 
