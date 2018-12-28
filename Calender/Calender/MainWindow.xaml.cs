@@ -788,20 +788,31 @@ namespace Calender
             /* We berekenen wanneer de volgende afspraak is. Notificatie één uur vroeger
              * We gebruiken hiervoor de klasse Timer en triggeren de Elapsed event 
              * */
+            if (DB.SelectAfspraak().Count > 0)
+            {
+                TimeSpan day = new TimeSpan(24, 00, 00);
+                TimeSpan now = TimeSpan.Parse(DateTime.Now.ToString("HH:MM"));
+                List<IAfspraak> afspraken = DB.SelectAfspraak();
+                bool gevonden = false;
+                foreach(var afspraak in afspraken)
+                {
+                    if (afspraak.StartTime >= DateTime.Now && gevonden == false)
+                    {
+                        DateTime nextAfspraak = afspraken.First().StartTime;
+                        TimeSpan activationTime = TimeSpan.Parse(nextAfspraak.AddHours(-1).ToString("HH:mm"));
 
-            TimeSpan day = new TimeSpan(24, 00, 00);
-            TimeSpan now = TimeSpan.Parse(DateTime.Now.ToString("HH:MM"));
-            List<IAfspraak> afspraken = DB.SelectAfspraak();
-            DateTime nextAfspraak = afspraken[0].StartTime;
-            TimeSpan activationTime = TimeSpan.Parse(nextAfspraak.AddHours(-1).ToString("HH:mm"));
+                        TimeSpan timeLeftUntilFirstRun = ((day - now) + activationTime);
 
-            TimeSpan timeLeftUntilFirstRun = ((day - now) + activationTime);
-
-            Timer execute = new Timer();
-            execute.Interval = timeLeftUntilFirstRun.TotalMilliseconds;
-            execute.Elapsed += notifNextAfspraak;
-            execute.Start();
-            execute.AutoReset = true;
+                        Timer execute = new Timer();
+                        execute.Interval = timeLeftUntilFirstRun.TotalMilliseconds;
+                        execute.Elapsed += notifNextAfspraak;
+                        execute.Start();
+                        execute.AutoReset = true;
+                        gevonden = true;
+                    }
+                }
+                gevonden = false;
+            }
         }
 
         private void notifNextAfspraak(object sender, ElapsedEventArgs e)

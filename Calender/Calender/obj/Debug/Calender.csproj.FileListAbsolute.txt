@@ -250,3 +250,6 @@ C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\bin\D
 C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\bin\Debug\ToastNotifications.dll
 C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\bin\Debug\ToastNotifications.Messages.dll
 C:\Users\Tijs De Belie\Desktop\LAATSTEVERSIE\Calender\Calender\obj\Debug\App.baml
+C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\bin\Debug\ToastNotifications.dll
+C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\bin\Debug\ToastNotifications.Messages.dll
+C:\Users\thomas.boesmans\source\repos\KalenderApplicatie\Calender\Calender\obj\Debug\App.baml
