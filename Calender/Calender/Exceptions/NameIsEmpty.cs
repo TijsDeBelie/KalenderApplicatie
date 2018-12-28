@@ -15,9 +15,9 @@ namespace Calender.Exceptions
 
         }
         public NameIsEmpty(string name)
-            : base(String.Format("name was empty for: {0}", name))
+            : base(String.Format("Naam was leeg voor: {0}", name))
         {
-            MessageBox.Show($"Naam was leeg voor: {name}");
+           
         }
 
     }
